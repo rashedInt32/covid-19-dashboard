@@ -7,11 +7,13 @@ import messages from './messages';
 
 const Content = styled.div`
   position: relative;
+  display: flex;
 `;
 
 const Text = styled.h1`
   font-size: 25px;
   font-weight: bold;
+  margin-right: 15px;
   color: ${({ theme, colored }) =>
     colored ? theme.colors.primary : theme.colors.secondary};
 `;
