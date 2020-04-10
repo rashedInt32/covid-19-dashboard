@@ -9,6 +9,6 @@ export default defineMessages({
   },
   subHeader: {
     id: `${scope}.subHeader`,
-    defaultMessage: 'Global',
+    defaultMessage: 'Global Overview',
   },
 });
