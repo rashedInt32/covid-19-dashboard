@@ -9,6 +9,7 @@ export default createMuiTheme({
     success: '#1cb142',
     warning: '#fa6400',
     lightBg: '#f8fbff',
+    white: '#ffffff',
   },
   borderRadiusBase: '8px',
   borderRadiusLarge: '20px',
