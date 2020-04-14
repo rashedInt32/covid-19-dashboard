@@ -3,7 +3,7 @@ import Layout from 'components/Layouts';
 import { getAllCases } from './HomeApi';
 
 function HomePage() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ latest: [], previous: [] });
 
   useEffect(() => {
     getLatestData();
@@ -11,12 +11,9 @@ function HomePage() {
 
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
-    const [error, yesterday] = await getAllCases({ yesterday: true });
+    const [error, previous] = await getAllCases({ yesterday: true });
     if (err || error) return;
-    console.log(latest.data);
-    console.log(yesterday.data);
-
-    //setData(response.data);
+    setData({ latest: latest.data, previos: previous.data });
   };
 
   return <Layout />;
