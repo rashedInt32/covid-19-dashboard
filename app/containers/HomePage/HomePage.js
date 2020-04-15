@@ -1,24 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { ThemeContext } from 'styled-components';
-
-import { getPercent } from 'utils/percent';
 
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
-import Card from 'components/Card';
 
 import { getAllCases } from './HomeApi';
 
 import TabWrapper from './Tab/TabWrapper';
-import CardWrapper from './Card/CardWrapper';
+import RenderCard from './Card/RenderCard';
 
 import messages from './messages';
 
 function HomePage({ intl }) {
-  const themeContext = useContext(ThemeContext);
-
   const tabs = [
     intl.formatMessage(messages.overall),
     intl.formatMessage(messages.today),
@@ -50,13 +44,6 @@ function HomePage({ intl }) {
 
   const { latest, previous } = data;
 
-  const percent = value => {
-    if (latest && previous) {
-      return getPercent(latest, previous, value);
-    }
-    return 0;
-  };
-
   return (
     <Layout>
       <TabWrapper>
@@ -70,32 +57,7 @@ function HomePage({ intl }) {
           </TabButton>
         ))}
       </TabWrapper>
-      <CardWrapper>
-        <Card
-          title={intl.formatMessage(messages.confirm)}
-          value={latest.cases}
-          color={themeContext.colors.danger}
-          percent={percent('cases')}
-        />
-        <Card
-          title={intl.formatMessage(messages.active)}
-          value={latest.active}
-          color={themeContext.colors.warning}
-          percent={percent('active')}
-        />
-        <Card
-          title={intl.formatMessage(messages.recovered)}
-          value={latest.recovered}
-          color={themeContext.colors.success}
-          percent={percent('recovered')}
-        />
-        <Card
-          title={intl.formatMessage(messages.deaths)}
-          value={latest.deaths}
-          color={themeContext.colors.primary}
-          percent={percent('deaths')}
-        />
-      </CardWrapper>
+      <RenderCard data={{ latest, previous }} />
     </Layout>
   );
 }
