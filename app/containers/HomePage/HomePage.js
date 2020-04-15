@@ -3,6 +3,8 @@ import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { ThemeContext } from 'styled-components';
 
+import { getPercent } from 'utils/percent';
+
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
 import Card from 'components/Card';
@@ -37,10 +39,23 @@ function HomePage({ intl }) {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
     if (err || error) return;
-    setData({ latest: latest.data, previos: previous.data });
+    setData({
+      latest: latest.data,
+      previous: previous.data,
+      loading: false,
+    });
   };
 
   const handleTabChange = tab => setActiveTab(new Set([tab]));
+
+  const { latest, previous } = data;
+
+  const percent = value => {
+    if (latest && previous) {
+      return getPercent(latest, previous, value);
+    }
+    return 0;
+  };
 
   return (
     <Layout>
@@ -58,35 +73,35 @@ function HomePage({ intl }) {
       <CardWrapper>
         <Card
           title={intl.formatMessage(messages.confirm)}
-          value={data.latest.cases}
-          color={themeContext.colors.primary}
-          percent={23}
+          value={latest.cases}
+          color={themeContext.colors.danger}
+          percent={percent('cases')}
         />
         <Card
           title={intl.formatMessage(messages.active)}
-          value={data.latest.active}
+          value={latest.active}
           color={themeContext.colors.warning}
-          percent={23}
+          percent={percent('active')}
         />
         <Card
           title={intl.formatMessage(messages.recovered)}
-          value={data.latest.recovered}
+          value={latest.recovered}
           color={themeContext.colors.success}
-          percent={23}
+          percent={percent('recovered')}
         />
         <Card
           title={intl.formatMessage(messages.deaths)}
-          value={data.latest.deaths}
-          color={themeContext.colors.danger}
-          percent={23}
+          value={latest.deaths}
+          color={themeContext.colors.primary}
+          percent={percent('deaths')}
         />
       </CardWrapper>
     </Layout>
   );
-};
+}
 
 HomePage.propTypes = {
   intl: object,
-}
+};
 
 export default injectIntl(HomePage);

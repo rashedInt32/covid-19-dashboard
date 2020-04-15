@@ -37,25 +37,56 @@ const Count = styled.h2`
 `;
 
 const PercentText = styled.p`
+  position: relative;
   font-size: 14px;
   color: ${({ theme }) => theme.colors.grey};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    margin-left: 10px;
+  }
+  &.increase {
+    &:before {
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid ${({ theme }) => theme.colors.danger};
+      margin-top: -6px;
+    }
+  }
+  &.decrease {
+    &:before {
+      border-top: 6px solid ${({ theme }) => theme.colors.success};
+      border-bottom: 6px solid transparent;
+      margin-top: 6px;
+    }
+  }
 `;
 
+// eslint-disable-next-line react/prop-types
 const Card = ({ title, value, percent, color }) => {
   const formatedNumber = value ? (
-    new Intl.NumberFormat('en-IN', {
-      maximumSignificantDigits: 3,
-    }).format(value)
+    new Intl.NumberFormat('en-IN').format(value)
   ) : (
     <Loader color={color} size={25} borderWidth={4} />
   );
+
+  const isPositive = percent > 0;
+
 
   return (
     <Main>
       <Wrapper>
         <Title>{title}</Title>
         <Count color={color}>{formatedNumber}</Count>
-        <PercentText>{percent}%</PercentText>
+        <PercentText className={isPositive ? 'increase' : 'decrease'}>
+          {percent}%
+        </PercentText>
       </Wrapper>
     </Main>
   );
@@ -64,7 +95,6 @@ const Card = ({ title, value, percent, color }) => {
 Card.propTypes = {
   title: string,
   value: number,
-  percent: number,
   color: string,
 };
 
