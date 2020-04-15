@@ -27,7 +27,7 @@ const SidebarWrapper = styled.div`
 const Logo = styled.img`
   width: 40px;
   height: 40px;
-  margin: 20px auto;
+  margin: 30px auto 20px;
   display: flex;
 `;
 

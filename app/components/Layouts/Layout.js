@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     borderTopLeftRadius: `${theme.borderRadiusLarge}`,
     borderBottomLeftRadius: `${theme.borderRadiusLarge}`,
     padding: '20px',
+    width: '100%',
     [theme.breakpoints.up('lg')]: {
       paddingLeft: '40px',
       paddingRight: '40px',

@@ -8,6 +8,7 @@ import messages from './messages';
 const Content = styled.div`
   position: relative;
   display: flex;
+  padding-top: 10px;
 `;
 
 const Text = styled.h1`
