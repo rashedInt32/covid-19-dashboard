@@ -6,6 +6,7 @@ import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
 
 import { getAllCases } from './HomeApi';
+import { renderableData } from './renderableData';
 
 import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
@@ -15,11 +16,13 @@ import messages from './messages';
 function HomePage({ intl }) {
   const tabs = [
     intl.formatMessage(messages.overall),
-    intl.formatMessage(messages.today),
     intl.formatMessage(messages.yesterday),
+    intl.formatMessage(messages.today),
   ];
 
-  const [data, setData] = useState({ latest: {}, previous: {} });
+  const [data, setData] = useState({});
+  const [renderData, setRenderData] = useState({});
+  const [isToday, setIsToday] = useState(false);
 
   const [activeTab, setActiveTab] = useState(
     new Set([intl.formatMessage(messages.overall)]),
@@ -33,16 +36,33 @@ function HomePage({ intl }) {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
     if (err || error) return;
+
     setData({
       latest: latest.data,
       previous: previous.data,
       loading: false,
     });
+    setRenderData(renderableData(latest.data, previous.data, false));
   };
 
-  const handleTabChange = tab => setActiveTab(new Set([tab]));
+  const handleTabChange = tab => {
+    setActiveTab(new Set([tab]));
+    const { latest, previous } = data;
 
-  const { latest, previous } = data;
+    switch (tab) {
+      case intl.formatMessage(messages.today):
+        setRenderData(renderableData(latest, previous, true));
+        setIsToday(true);
+        break;
+      case intl.formatMessage(messages.yesterday):
+        setRenderData(renderableData(previous, latest, false));
+        setIsToday(false);
+        break;
+      default:
+        setRenderData(renderableData(latest, previous, false));
+        setIsToday(false);
+    }
+  };
 
   return (
     <Layout>
@@ -57,7 +77,7 @@ function HomePage({ intl }) {
           </TabButton>
         ))}
       </TabWrapper>
-      <RenderCard data={{ latest, previous }} />
+      <RenderCard data={renderData} today={isToday} />
     </Layout>
   );
 }

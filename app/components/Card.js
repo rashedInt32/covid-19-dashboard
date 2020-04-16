@@ -6,9 +6,21 @@ import Loader from './Loader';
 
 const Main = styled.div`
   position: relative;
-  flex: 0 0 25%;
   display: flex;
   padding-right: 20px;
+  min-width: 25%;
+  margin-bottom: 20px;
+
+  @media (max-width: 992px) {
+    min-width: 25%;
+  }
+  @media (max-width: 768px) {
+    min-width: 50%;
+  }
+  @media (max-width: 576px) {
+    min-width: 100%;
+  }
+
 `;
 
 const Wrapper = styled.div`
@@ -18,7 +30,7 @@ const Wrapper = styled.div`
   border-radius: 15px;
   padding: 15px 20px;
   text-align: center;
-  box-shadow: 0 0 15px 1px rgba(189, 189, 189, 0.1);
+  box-shadow: 0 0 15px 3px rgba(189, 189, 189, 0.1);
   width: 100%;
 `;
 

@@ -40,4 +40,8 @@ export default defineMessages({
     id: `${scope}.CardWrapper`,
     defaultMessage: 'Deaths',
   },
+  critical: {
+    id: `${scope}.CardWrapper`,
+    defaultMessage: 'Critical',
+  },
 });
