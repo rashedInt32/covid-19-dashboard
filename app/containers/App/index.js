@@ -7,17 +7,23 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 
 import Router from 'containers/Router';
 
+import { initializeFirebase } from 'firebase/initializeFirebase';
+
 import GlobalStyle from '../../theme/globalStyles';
 import Theme from '../../theme';
 
 export default function App() {
+  useEffect(() => {
+    initializeFirebase();
+  }, []);
+
   return (
     <MuiThemeProvider theme={Theme}>
       <ThemeProvider theme={Theme}>
