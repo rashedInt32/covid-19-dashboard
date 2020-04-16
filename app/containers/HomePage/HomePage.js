@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
+import moment from 'moment';
 
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
+import { miliseconds } from 'utils/miliseconds';
 
 import { getAllCases } from './HomeApi';
 import { renderableData } from './renderableData';
@@ -19,18 +21,20 @@ function HomePage({ intl }) {
     intl.formatMessage(messages.yesterday),
     intl.formatMessage(messages.today),
   ];
+  let interval;
+  const refecthDataTime = 660000;
 
   const [data, setData] = useState({});
   const [renderData, setRenderData] = useState({});
-  const [isToday, setIsToday] = useState(false);
-
+  const [shouldFetchData, setShouldFetchData] = useState(false);
   const [activeTab, setActiveTab] = useState(
     new Set([intl.formatMessage(messages.overall)]),
   );
 
   useEffect(() => {
     getLatestData();
-  }, []);
+    return () => clearInterval(interval);
+  }, [shouldFetchData]);
 
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
@@ -42,7 +46,21 @@ function HomePage({ intl }) {
       previous: previous.data,
       loading: false,
     });
+
     setRenderData(renderableData(latest.data, previous.data, false));
+
+    if (latest.data) {
+      const lastUpdated = moment(latest.data.updated).fromNow('mm');
+      const minutesAgo = lastUpdated.split(' ')[0];
+      refetchData(minutesAgo);
+    }
+  };
+
+  const refetchData = time => {
+    const remainingSecond = refecthDataTime - miliseconds(time);
+    interval = setInterval(() => {
+      setShouldFetchData(!shouldFetchData);
+    }, remainingSecond);
   };
 
   const handleTabChange = tab => {
@@ -52,15 +70,15 @@ function HomePage({ intl }) {
     switch (tab) {
       case intl.formatMessage(messages.today):
         setRenderData(renderableData(latest, previous, true));
-        setIsToday(true);
+        setData({ ...data, today: true });
         break;
       case intl.formatMessage(messages.yesterday):
         setRenderData(renderableData(previous, latest, false));
-        setIsToday(false);
+        setData({ ...data, today: false });
         break;
       default:
         setRenderData(renderableData(latest, previous, false));
-        setIsToday(false);
+        setData({ ...data, today: false });
     }
   };
 
@@ -77,7 +95,7 @@ function HomePage({ intl }) {
           </TabButton>
         ))}
       </TabWrapper>
-      <RenderCard data={renderData} today={isToday} />
+      <RenderCard data={renderData} today={data.today} />
     </Layout>
   );
 }

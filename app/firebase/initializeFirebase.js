@@ -3,4 +3,8 @@ import 'firebase/analytics';
 import { firebaseConfig } from './firebaseConfig';
 
 // Initialize Firebase
-export const initializeFirebase = () => firebase.initializeApp(firebaseConfig);
+export const initializeFirebase = () => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+};
