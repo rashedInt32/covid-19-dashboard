@@ -13,12 +13,13 @@ import { getCountry } from './homeUtils/getCountry';
 
 import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
+import CountryDropdown from './CountryDropdown';
 
 import messages from './messages';
 import { CountryContext } from '../Context/CountryContext';
 
 function HomePage({ intl }) {
-  const { myCountry } = useContext(CountryContext);
+  const { myCountry, updateCountries } = useContext(CountryContext);
 
   const tabs = [
     intl.formatMessage(messages.overall),
@@ -60,6 +61,7 @@ function HomePage({ intl }) {
       latest: countryLatest.data,
       previous: countryPrev.data,
     });
+    updateCountries(countryLatest.data);
     setRenderData(renderableData(latest.data, previous.data, false));
 
     if (latest.data) {
@@ -121,6 +123,7 @@ function HomePage({ intl }) {
         today={data.today}
         myCountry={data.myCountry}
       />
+      <CountryDropdown countries={countries.latest} onClick={() => {}} />
     </Layout>
   );
 }
