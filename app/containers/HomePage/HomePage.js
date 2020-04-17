@@ -23,10 +23,9 @@ function HomePage({ intl }) {
 
   const tabs = [
     intl.formatMessage(messages.overall),
-    intl.formatMessage(messages.myCountry),
     intl.formatMessage(messages.yesterday),
     intl.formatMessage(messages.today),
-    intl.formatMessage(messages.selectCountry),
+    intl.formatMessage(messages.myCountry),
   ];
   let interval;
   const refecthDataTime = 660000;
@@ -118,22 +117,24 @@ function HomePage({ intl }) {
   return (
     <Layout>
       <TabWrapper>
-        {tabs.map(t => (
-          <TabButton
-            key={t}
-            onClick={() => handleTabChange(t)}
-            active={activeTab.has(t)}
-          >
-            {t}
-          </TabButton>
-        ))}
+        <>
+          {tabs.map(t => (
+            <TabButton
+              key={t}
+              onClick={() => handleTabChange(t)}
+              active={activeTab.has(t)}
+            >
+              {t}
+            </TabButton>
+          ))}
+          <CountryDropdown countries={countries.latest} onClick={() => {}} />
+        </>
       </TabWrapper>
       <RenderCard
         data={renderData}
         today={data.today}
         myCountry={data.myCountry}
       />
-      <CountryDropdown countries={countries.latest} onClick={() => {}} />
     </Layout>
   );
 }

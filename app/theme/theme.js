@@ -7,6 +7,8 @@ export default createMuiTheme({
     secondary: '#1a1053',
     tartiary: '#817c9b',
     danger: '#f9345e',
+    error: '#f9345e',
+    dangerLight: 'rgba(249,52,94, 0.4)',
     success: '#1cb142',
     successLight: 'rgba(28,177,66, 0.3)',
     warning: '#fa6400',

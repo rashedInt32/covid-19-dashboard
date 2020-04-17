@@ -1,94 +1,28 @@
-import React, { useState } from 'react';
-import { array, func } from 'prop-types';
-import styled from 'styled-components';
+import React, { useState, useRef } from 'react';
+import { array, object } from 'prop-types';
+import { injectIntl } from 'react-intl';
 import _ from 'lodash';
+import CloseIcon from '@material-ui/icons/Close';
 
-// image, name, totalcases
-
-const Image = styled.img`
-  position: relative;
-  width: 25px;
-  margin-right: 25px;
-`;
-
-const Name = styled.h5`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.secondary};
-  &.warning {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${({ theme }) => theme.colors.warningLight};
-  }
-  span {
-    color: ${({ theme }) => theme.colors.primary};
-    padding: 0 6px;
-  }
-`;
-
-const Cases = styled(Name)`
-  color: ${({ theme }) => theme.colors.warning};
-`;
-
-const List = styled.li`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  border-radius: 30px;
-  transition: all .3s ease;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryLight};
-  }
-`;
-
-const ListWrapper = styled.ul`
-  positions: relative;
-  padding: 0;
-  margin: 0;
-`;
-
-const DropdownContent = styled.div`
-  position: relative;
-  border-radius: 15px;
-  width: 400px;
-  max-height: 450px;
-  overflow-x: scroll;
-  padding: 20px;
-  padding-top: 0;
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0 0 15px 3px rgba(189, 189, 189, 0.1);
-`;
-
-const InputWrapper = styled.div`
-  position: sticky;
-  top: 0;
-  padding: 20px 0 15px;
-  background: ${({ theme }) => theme.colors.white};
-  z-index: 2;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  border-radius: 30px;
-  padding: 5px 20px;
-  border: 2px solid ${({ theme }) => theme.colors.successLight};
-  box-sizing: border-box;
-  transition: all .3s ease;
-  background: ${({ theme }) => theme.colors.white};
-  &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.success};
-  }
-`;
+import { useOnClickOutside } from 'hooks/useOnClickOutside';
+import messages from './messages';
+import {
+  Image,
+  Name,
+  Cases,
+  List,
+  ListWrapper,
+  DropdownContent,
+  Container,
+  InputWrapper,
+  Input,
+  Main,
+  RemoveButton,
+  Button,
+} from './DropDown/DropDown';
 
 // eslint-disable-next-line react/prop-types
-const RenderCountries = ({ countries }) => {
+const RenderCountries = ({ countries, onClick }) => {
   const [text, setText] = useState('');
   if (!countries) return null;
 
@@ -97,7 +31,7 @@ const RenderCountries = ({ countries }) => {
       ? _.sortBy(countries, ['cases'])
       : _.filter(countries, c =>
           c.country.toLowerCase().includes(text.toLowerCase()),
-        );
+      );
 
   modifiedCountries =
     text === '' ? _.reverse(modifiedCountries) : modifiedCountries;
@@ -116,7 +50,13 @@ const RenderCountries = ({ countries }) => {
       <ListWrapper>
         {modifiedCountries.length ? (
           modifiedCountries.map(c => (
-            <List key={c.country}>
+            <List
+              key={c.country}
+              onClick={() => {
+                onClick(c.country);
+                setText('');
+              }}
+            >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={c.countryInfo.flag} atl={c.country} />
                 <Name>{c.country}</Name>
@@ -134,17 +74,66 @@ const RenderCountries = ({ countries }) => {
   );
 };
 
-const CountryDropdown = ({ countries, onClick }) => {
+const CountryDropdown = ({ countries, intl }) => {
+  const [country, setCountry] = useState('');
+  const [active, setActive] = useState(false);
+  const [btnActive, setBtnActive] = useState(false);
+
+  const ref = useRef();
+
+  const onClickCountry = c => {
+    setCountry(c);
+    setActive(!active);
+  };
+  const removeCountry = () => {
+    setCountry('');
+    setBtnActive(false);
+    setActive(false);
+  };
+
+  const showDropdown = () => {
+    if (country === '') {
+      setBtnActive(!btnActive);
+    }
+    setActive(!active);
+  };
+
+  useOnClickOutside(ref, () => {
+    setActive(false)
+    setBtnActive(false);
+  });
+
   return (
-    <DropdownContent>
-      <RenderCountries countries={countries} />
-    </DropdownContent>
+    <Main>
+      <Button
+        onClick={showDropdown}
+        active={btnActive}
+        className={country !== '' ? 'active' : ''}
+      >
+        {country !== ''
+          ? country
+          : intl.formatMessage(messages.selectCountry)}
+      </Button>
+
+      <RemoveButton onClick={removeCountry} country={country}>
+        <CloseIcon fontSize="small" color="error" />
+      </RemoveButton>
+
+      <Container className={active ? 'active' : ''} ref={ref}>
+        <DropdownContent>
+          <RenderCountries
+            countries={countries}
+            onClick={c => onClickCountry(c)}
+          />
+        </DropdownContent>
+      </Container>
+    </Main>
   );
 };
 
 CountryDropdown.propTypes = {
   countries: array,
-  onClick: func,
-}
+  intl: object,
+};
 
-export default CountryDropdown;
+export default injectIntl(CountryDropdown);
