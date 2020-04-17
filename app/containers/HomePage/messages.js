@@ -28,6 +28,10 @@ export default defineMessages({
     id: `${scope}.TabWrapper`,
     defaultMessage: 'My Country',
   },
+  selectCountry: {
+    id: `${scope}.TabWrapper`,
+    defaultMessage: 'Select Country',
+  },
   confirm: {
     id: `${scope}.CardWrapper`,
     defaultMessage: 'Aggregated Confirmed',

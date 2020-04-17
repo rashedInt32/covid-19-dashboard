@@ -8,8 +8,8 @@ const getAllCases = async obj => {
   return [err, resp];
 };
 
-const getAllCountries = async () => {
-  const [err, resp] = await to(request.get(getCountries()));
+const getAllCountries = async obj => {
+  const [err, resp] = await to(request.get(getCountries(obj)));
   return [err, resp];
 };
 

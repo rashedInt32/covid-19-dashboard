@@ -10,14 +10,12 @@ import { getPercent } from 'utils/percent';
 
 import CardWrapper from './CardWrapper';
 
-const RenderCard = ({ intl, data, today, myCountry }) => {
+const RenderCard = ({ intl, data, today }) => {
   const themeContext = useContext(ThemeContext);
 
   const percent = value => {
-    if (!myCountry) {
-      if (data.latest && data.previous) {
-        return getPercent(data.latest, data.previous, value);
-      }
+    if (data.latest && data.previous) {
+      return getPercent(data.latest, data.previous, value);
     }
     return 0;
   };
@@ -69,7 +67,6 @@ RenderCard.propTypes = {
   data: object,
   intl: object,
   today: bool,
-  myCountry: bool,
 };
 
 export default injectIntl(RenderCard);

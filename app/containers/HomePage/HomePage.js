@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
-import _ from 'lodash';
 
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
@@ -10,6 +9,7 @@ import { miliseconds } from 'utils/miliseconds';
 
 import { getAllCases, getAllCountries } from './HomeApi';
 import { renderableData } from './renderableData';
+import { getCountry } from './homeUtils/getCountry';
 
 import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
@@ -25,12 +25,13 @@ function HomePage({ intl }) {
     intl.formatMessage(messages.myCountry),
     intl.formatMessage(messages.yesterday),
     intl.formatMessage(messages.today),
+    intl.formatMessage(messages.selectCountry),
   ];
   let interval;
   const refecthDataTime = 660000;
 
   const [data, setData] = useState({});
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState({});
   const [renderData, setRenderData] = useState({});
   const [shouldFetchData, setShouldFetchData] = useState(false);
   const [activeTab, setActiveTab] = useState(
@@ -45,8 +46,9 @@ function HomePage({ intl }) {
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
-    const [e, response] = await getAllCountries();
-    if (err || error || e) return;
+    const [, countryLatest] = await getAllCountries();
+    const [, countryPrev] = await getAllCountries({ yesterday: true });
+    if (err || error) return;
 
     setData({
       latest: latest.data,
@@ -54,7 +56,10 @@ function HomePage({ intl }) {
       loading: false,
     });
 
-    setCountries(response.data);
+    setCountries({
+      latest: countryLatest.data,
+      previous: countryPrev.data,
+    });
     setRenderData(renderableData(latest.data, previous.data, false));
 
     if (latest.data) {
@@ -71,10 +76,7 @@ function HomePage({ intl }) {
     }, remainingSecond);
   };
 
-  const getMyCountryData = () => {
-    const country = _.find(countries, c => c.country === myCountry.country);
-    return country;
-  };
+  const getMyCountry = getCountry(countries, myCountry);
 
   const handleTabChange = tab => {
     setActiveTab(new Set([tab]));
@@ -90,7 +92,9 @@ function HomePage({ intl }) {
         setData({ ...data, today: false, myCountry: false });
         break;
       case intl.formatMessage(messages.myCountry):
-        setRenderData(renderableData(getMyCountryData(), previous, false));
+        setRenderData(
+          renderableData(getMyCountry.latest, getMyCountry.previous, false),
+        );
         setData({ ...data, today: false, myCountry: true });
         break;
       default:
