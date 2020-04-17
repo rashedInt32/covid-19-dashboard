@@ -22,47 +22,45 @@ const RenderCard = ({ intl, data, today }) => {
 
   return (
     <>
-      {!_.isEmpty(data) && (
-        <CardWrapper>
+      <CardWrapper>
+        <Card
+          title={intl.formatMessage(messages.confirm)}
+          value={!_.isEmpty(data) && data.latest.cases}
+          color={themeContext.colors.danger}
+          percent={percent('cases')}
+        />
+        {today && (
           <Card
-            title={intl.formatMessage(messages.confirm)}
-            value={data.latest.cases}
-            color={themeContext.colors.danger}
-            percent={percent('cases')}
+            title={intl.formatMessage(messages.critical)}
+            value={!_.isEmpty(data) && data.latest.critical}
+            color={themeContext.colors.warning}
+            percent={percent('critical')}
           />
-          {today && (
+        )}
+        {!today && (
+          <>
             <Card
-              title={intl.formatMessage(messages.critical)}
-              value={data.latest.critical}
+              title={intl.formatMessage(messages.active)}
+              value={!_.isEmpty(data) && data.latest.active}
               color={themeContext.colors.warning}
-              percent={percent('critical')}
+              percent={percent('active')}
             />
-          )}
-          {!today && (
-            <>
-              <Card
-                title={intl.formatMessage(messages.active)}
-                value={data.latest.active}
-                color={themeContext.colors.warning}
-                percent={percent('active')}
-              />
-              <Card
-                title={intl.formatMessage(messages.recovered)}
-                value={data.latest.recovered}
-                color={themeContext.colors.success}
-                percent={percent('recovered')}
-              />
-            </>
-          )}
+            <Card
+              title={intl.formatMessage(messages.recovered)}
+              value={!_.isEmpty(data) && data.latest.recovered}
+              color={themeContext.colors.success}
+              percent={percent('recovered')}
+            />
+          </>
+        )}
 
-          <Card
-            title={intl.formatMessage(messages.deaths)}
-            value={data.latest.deaths}
-            color={themeContext.colors.primary}
-            percent={percent('deaths')}
-          />
-        </CardWrapper>
-      )}
+        <Card
+          title={intl.formatMessage(messages.deaths)}
+          value={!_.isEmpty(data) && data.latest.deaths}
+          color={themeContext.colors.primary}
+          percent={percent('deaths')}
+        />
+      </CardWrapper>
     </>
   );
 };
