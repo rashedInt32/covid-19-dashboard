@@ -102,11 +102,6 @@ const RenderCountries = ({ countries }) => {
   modifiedCountries =
     text === '' ? _.reverse(modifiedCountries) : modifiedCountries;
 
-  const onChange = e => {
-    setText(e.target.value);
-  };
-
-  // eslint-disable-next-line consistent-return
   return (
     <>
       <InputWrapper>

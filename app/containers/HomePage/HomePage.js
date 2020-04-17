@@ -44,11 +44,13 @@ function HomePage({ intl }) {
     return () => clearInterval(interval);
   }, [shouldFetchData]);
 
+  useEffect(() => {
+    getCountriesData();
+  }, [shouldFetchData]);
+
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
-    const [, countryLatest] = await getAllCountries();
-    const [, countryPrev] = await getAllCountries({ yesterday: true });
     if (err || error) return;
 
     setData({
@@ -57,11 +59,6 @@ function HomePage({ intl }) {
       loading: false,
     });
 
-    setCountries({
-      latest: countryLatest.data,
-      previous: countryPrev.data,
-    });
-    updateCountries(countryLatest.data);
     setRenderData(renderableData(latest.data, previous.data, false));
 
     if (latest.data) {
@@ -69,6 +66,19 @@ function HomePage({ intl }) {
       const minutesAgo = lastUpdated.split(' ')[0];
       refetchData(minutesAgo);
     }
+  };
+
+  const getCountriesData = async () => {
+    const [err, countryLatest] = await getAllCountries();
+    const [error, countryPrev] = await getAllCountries({ yesterday: true });
+    if (err || error) return;
+
+    setCountries({
+      latest: countryLatest.data,
+      previous: countryPrev.data,
+    });
+
+    updateCountries(countryLatest.data);
   };
 
   const refetchData = time => {
