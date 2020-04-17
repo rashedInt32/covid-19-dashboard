@@ -19,4 +19,5 @@ export const renderableData = (latest, previous, today) => {
 
     return render;
   }
+  return null;
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const TabButton = styled.button`
   position: relative;
-  padding: 5px 15px;
+  padding: 6px 15px;
   border-radius: 15px;
   font-size: 14px;
   font-weight: bold;

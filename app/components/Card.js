@@ -90,14 +90,13 @@ const Card = ({ title, value, percent, color }) => {
 
   const isPositive = percent > 0;
 
-
   return (
     <Main>
       <Wrapper>
         <Title>{title}</Title>
         <Count color={color}>{formatedNumber}</Count>
         <PercentText className={isPositive ? 'increase' : 'decrease'}>
-          {percent}%
+          {percent} %
         </PercentText>
       </Wrapper>
     </Main>

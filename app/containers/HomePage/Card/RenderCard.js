@@ -10,58 +10,58 @@ import { getPercent } from 'utils/percent';
 
 import CardWrapper from './CardWrapper';
 
-const RenderCard = ({ intl, data, today }) => {
+const RenderCard = ({ intl, data, today, myCountry }) => {
   const themeContext = useContext(ThemeContext);
 
   const percent = value => {
-    if (data.latest && data.previous) {
-      return getPercent(data.latest, data.previous, value);
+    if (!myCountry) {
+      if (data.latest && data.previous) {
+        return getPercent(data.latest, data.previous, value);
+      }
     }
     return 0;
   };
 
   return (
-    <>
-      <CardWrapper>
+    <CardWrapper>
+      <Card
+        title={intl.formatMessage(messages.confirm)}
+        value={!_.isEmpty(data) ? data.latest.cases : null}
+        color={themeContext.colors.danger}
+        percent={percent('cases')}
+      />
+      {today && (
         <Card
-          title={intl.formatMessage(messages.confirm)}
-          value={!_.isEmpty(data) && data.latest.cases}
-          color={themeContext.colors.danger}
-          percent={percent('cases')}
+          title={intl.formatMessage(messages.critical)}
+          value={!_.isEmpty(data) ? data.latest.critical : null}
+          color={themeContext.colors.warning}
+          percent={percent('critical')}
         />
-        {today && (
+      )}
+      {!today && (
+        <>
           <Card
-            title={intl.formatMessage(messages.critical)}
-            value={!_.isEmpty(data) && data.latest.critical}
+            title={intl.formatMessage(messages.active)}
+            value={!_.isEmpty(data) ? data.latest.active : null}
             color={themeContext.colors.warning}
-            percent={percent('critical')}
+            percent={percent('active')}
           />
-        )}
-        {!today && (
-          <>
-            <Card
-              title={intl.formatMessage(messages.active)}
-              value={!_.isEmpty(data) && data.latest.active}
-              color={themeContext.colors.warning}
-              percent={percent('active')}
-            />
-            <Card
-              title={intl.formatMessage(messages.recovered)}
-              value={!_.isEmpty(data) && data.latest.recovered}
-              color={themeContext.colors.success}
-              percent={percent('recovered')}
-            />
-          </>
-        )}
+          <Card
+            title={intl.formatMessage(messages.recovered)}
+            value={!_.isEmpty(data) ? data.latest.recovered : null}
+            color={themeContext.colors.success}
+            percent={percent('recovered')}
+          />
+        </>
+      )}
 
-        <Card
-          title={intl.formatMessage(messages.deaths)}
-          value={!_.isEmpty(data) && data.latest.deaths}
-          color={themeContext.colors.primary}
-          percent={percent('deaths')}
-        />
-      </CardWrapper>
-    </>
+      <Card
+        title={intl.formatMessage(messages.deaths)}
+        value={!_.isEmpty(data) ? data.latest.deaths : null}
+        color={themeContext.colors.primary}
+        percent={percent('deaths')}
+      />
+    </CardWrapper>
   );
 };
 
@@ -69,6 +69,7 @@ RenderCard.propTypes = {
   data: object,
   intl: object,
   today: bool,
+  myCountry: bool,
 };
 
 export default injectIntl(RenderCard);

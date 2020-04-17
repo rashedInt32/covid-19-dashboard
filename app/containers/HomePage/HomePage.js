@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
+import _ from 'lodash';
 
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
@@ -14,19 +15,22 @@ import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
 
 import messages from './messages';
+import { CountryContext } from '../Context/CountryContext';
 
 function HomePage({ intl }) {
+  const { myCountry } = useContext(CountryContext);
+
   const tabs = [
     intl.formatMessage(messages.overall),
+    intl.formatMessage(messages.myCountry),
     intl.formatMessage(messages.yesterday),
     intl.formatMessage(messages.today),
-    intl.formatMessage(messages.myCountry),
   ];
   let interval;
   const refecthDataTime = 660000;
 
   const [data, setData] = useState({});
-  const [allCountires, setAllCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [renderData, setRenderData] = useState({});
   const [shouldFetchData, setShouldFetchData] = useState(false);
   const [activeTab, setActiveTab] = useState(
@@ -41,7 +45,7 @@ function HomePage({ intl }) {
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
-    const [e, countries] = await getAllCountries();
+    const [e, response] = await getAllCountries();
     if (err || error || e) return;
 
     setData({
@@ -50,8 +54,7 @@ function HomePage({ intl }) {
       loading: false,
     });
 
-    setAllCountries(countries.data);
-
+    setCountries(response.data);
     setRenderData(renderableData(latest.data, previous.data, false));
 
     if (latest.data) {
@@ -68,6 +71,11 @@ function HomePage({ intl }) {
     }, remainingSecond);
   };
 
+  const getMyCountryData = () => {
+    const country = _.find(countries, c => c.country === myCountry.country);
+    return country;
+  };
+
   const handleTabChange = tab => {
     setActiveTab(new Set([tab]));
     const { latest, previous } = data;
@@ -75,15 +83,19 @@ function HomePage({ intl }) {
     switch (tab) {
       case intl.formatMessage(messages.today):
         setRenderData(renderableData(latest, previous, true));
-        setData({ ...data, today: true });
+        setData({ ...data, today: true, myCountry: false });
         break;
       case intl.formatMessage(messages.yesterday):
         setRenderData(renderableData(previous, latest, false));
-        setData({ ...data, today: false });
+        setData({ ...data, today: false, myCountry: false });
+        break;
+      case intl.formatMessage(messages.myCountry):
+        setRenderData(renderableData(getMyCountryData(), previous, false));
+        setData({ ...data, today: false, myCountry: true });
         break;
       default:
         setRenderData(renderableData(latest, previous, false));
-        setData({ ...data, today: false });
+        setData({ ...data, today: false, myCountry: false });
     }
   };
 
@@ -100,7 +112,11 @@ function HomePage({ intl }) {
           </TabButton>
         ))}
       </TabWrapper>
-      <RenderCard data={renderData} today={data.today} />
+      <RenderCard
+        data={renderData}
+        today={data.today}
+        myCountry={data.myCountry}
+      />
     </Layout>
   );
 }
