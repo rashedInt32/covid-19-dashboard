@@ -24,6 +24,10 @@ export default defineMessages({
     id: `${scope}.TabWrapper`,
     defaultMessage: 'Yesterday',
   },
+  myCountry: {
+    id: `${scope}.TabWrapper`,
+    defaultMessage: 'My Country',
+  },
   confirm: {
     id: `${scope}.CardWrapper`,
     defaultMessage: 'Aggregated Confirmed',

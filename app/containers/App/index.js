@@ -13,6 +13,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 
 import Router from 'containers/Router';
+import CountryContextProvider from 'containers/Context/CountryContext';
 
 import { initializeFirebase } from 'firebase/initializeFirebase';
 
@@ -27,7 +28,9 @@ export default function App() {
   return (
     <MuiThemeProvider theme={Theme}>
       <ThemeProvider theme={Theme}>
-        <Router />
+        <CountryContextProvider>
+          <Router />
+        </CountryContextProvider>
       </ThemeProvider>
       <GlobalStyle />
     </MuiThemeProvider>

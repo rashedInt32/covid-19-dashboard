@@ -7,7 +7,7 @@ import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
 import { miliseconds } from 'utils/miliseconds';
 
-import { getAllCases } from './HomeApi';
+import { getAllCases, getAllCountries } from './HomeApi';
 import { renderableData } from './renderableData';
 
 import TabWrapper from './Tab/TabWrapper';
@@ -20,11 +20,13 @@ function HomePage({ intl }) {
     intl.formatMessage(messages.overall),
     intl.formatMessage(messages.yesterday),
     intl.formatMessage(messages.today),
+    intl.formatMessage(messages.myCountry),
   ];
   let interval;
   const refecthDataTime = 660000;
 
   const [data, setData] = useState({});
+  const [allCountires, setAllCountries] = useState([]);
   const [renderData, setRenderData] = useState({});
   const [shouldFetchData, setShouldFetchData] = useState(false);
   const [activeTab, setActiveTab] = useState(
@@ -39,13 +41,16 @@ function HomePage({ intl }) {
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
-    if (err || error) return;
+    const [e, countries] = await getAllCountries();
+    if (err || error || e) return;
 
     setData({
       latest: latest.data,
       previous: previous.data,
       loading: false,
     });
+
+    setAllCountries(countries.data);
 
     setRenderData(renderableData(latest.data, previous.data, false));
 
