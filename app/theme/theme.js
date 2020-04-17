@@ -10,6 +10,7 @@ export default createMuiTheme({
     success: '#1cb142',
     successLight: 'rgba(28,177,66, 0.3)',
     warning: '#fa6400',
+    warningLight: 'rgba(250,100,0, 0.2)',
     lightBg: '#f8fbff',
     white: '#ffffff',
     grey: '#bdbdbd',

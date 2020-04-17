@@ -9,11 +9,24 @@ const Image = styled.img`
   position: relative;
   width: 25px;
   margin-right: 25px;
-`
+`;
 
 const Name = styled.h5`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.secondary};
+  &.warning {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.colors.warningLight};
+  }
+  span {
+    color: ${({ theme }) => theme.colors.primary};
+    padding: 0 6px;
+  }
 `;
 
 const Cases = styled(Name)`
@@ -78,21 +91,19 @@ const Input = styled.input`
 const RenderCountries = ({ countries }) => {
   const [text, setText] = useState('');
   if (!countries) return null;
-  const searchCountries = (value = countries) => {
-    let modifiedCountries = value;
-    modifiedCountries =
-      text === ''
-        ? _.sortBy(value, ['cases'])
-        : _.filter(value, c => c.country.toLowerCase().includes(text));
 
-    console.log(value);
-    console.log(modifiedCountries);
-    return modifiedCountries;
-  };
+  let modifiedCountries =
+    text === ''
+      ? _.sortBy(countries, ['cases'])
+      : _.filter(countries, c =>
+          c.country.toLowerCase().includes(text.toLowerCase()),
+        );
+
+  modifiedCountries =
+    text === '' ? _.reverse(modifiedCountries) : modifiedCountries;
 
   const onChange = e => {
     setText(e.target.value);
-    searchCountries(countries);
   };
 
   // eslint-disable-next-line consistent-return
@@ -102,21 +113,27 @@ const RenderCountries = ({ countries }) => {
         <Input
           type="text"
           placeholder="Type country name..."
-          onChange={e => onChange(e)}
+          onChange={e => setText(e.target.value)}
           value={text}
         />
       </InputWrapper>
 
       <ListWrapper>
-        {searchCountries().map(c => (
-          <List key={c.country}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Image src={c.countryInfo.flag} atl={c.country} />
-              <Name>{c.country}</Name>
-            </div>
-            <Cases>{new Intl.NumberFormat('en-IN').format(c.cases)}</Cases>
-          </List>
-        ))}
+        {modifiedCountries.length ? (
+          modifiedCountries.map(c => (
+            <List key={c.country}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Image src={c.countryInfo.flag} atl={c.country} />
+                <Name>{c.country}</Name>
+              </div>
+              <Cases>{new Intl.NumberFormat('en-IN').format(c.cases)}</Cases>
+            </List>
+          ))
+        ) : (
+          <Name className="warning">
+            No country name <span>{text}</span> found.
+          </Name>
+        )}
       </ListWrapper>
     </>
   );
