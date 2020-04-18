@@ -34,13 +34,16 @@ const List = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 7px 15px;
   border-radius: 30px;
   transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryLight};
+  }
+  &.active {
+    background-color: ${({ theme }) => theme.colors.successLight};
   }
 `;
 

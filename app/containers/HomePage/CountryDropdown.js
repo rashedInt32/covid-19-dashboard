@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { array, object } from 'prop-types';
+import { array, object, func } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 import CloseIcon from '@material-ui/icons/Close';
@@ -23,7 +23,7 @@ import {
 import { CountryContext } from '../Context/CountryContext';
 
 // eslint-disable-next-line react/prop-types
-const RenderCountries = ({ countries, onClick }) => {
+const RenderCountries = ({ countries, onClick, selectedCountry }) => {
   const [text, setText] = useState('');
   if (!countries) return null;
 
@@ -57,6 +57,7 @@ const RenderCountries = ({ countries, onClick }) => {
                 onClick(c.country);
                 setText('');
               }}
+              className={c.country === selectedCountry ? 'active' : ''}
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={c.countryInfo.flag} atl={c.country} />
@@ -134,6 +135,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
         <DropdownContent>
           <RenderCountries
             countries={countries}
+            selectedCountry={country}
             onClick={c => {
               onClickCountry(c);
               onClick(c);
@@ -148,6 +150,8 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
 CountryDropdown.propTypes = {
   countries: array,
   intl: object,
+  onClick: func,
+  onRemove: func,
 };
 
 export default injectIntl(CountryDropdown);

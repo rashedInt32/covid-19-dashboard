@@ -1,9 +1,10 @@
-import React from 'react';
-import { object } from 'prop-types';
+import React, { useContext } from 'react';
+import { object, string } from 'prop-types';
 import styled from 'styled-components';
 import { injectIntl } from 'react-intl';
 
 import messages from './messages';
+import { CountryContext } from '../../containers/Context/CountryContext';
 
 const Content = styled.div`
   position: relative;
@@ -19,15 +20,26 @@ const Text = styled.h1`
     colored ? theme.colors.primary : theme.colors.secondary};
 `;
 
-const Header = ({ intl }) => (
-  <Content>
-    <Text colored>{intl.formatMessage(messages.header)}</Text>
-    <Text>{intl.formatMessage(messages.subHeader)}</Text>
-  </Content>
-);
+const Header = ({ intl, country, active }) => {
+  const { myCountry } = useContext(CountryContext);
+  return (
+    <Content>
+      <Text colored>{intl.formatMessage(messages.header)}</Text>
+      {active !== 'My Country' ? (
+        <Text>
+          {country === '' ? `Global - ${active}` : `${country} - ${active}`}
+        </Text>
+      ) : (
+        <Text>{myCountry.country}</Text>
+      )}
+    </Content>
+  );
+};
 
 Header.propTypes = {
   intl: object,
+  country: string,
+  active: string,
 };
 
 export default injectIntl(Header);

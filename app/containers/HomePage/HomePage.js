@@ -126,7 +126,7 @@ function HomePage({ intl }) {
   };
 
   return (
-    <Layout>
+    <Layout country={country} active={activeTab.values().next().value}>
       <TabWrapper>
         <>
           {tabs.map(t => (

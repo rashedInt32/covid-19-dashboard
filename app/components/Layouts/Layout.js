@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, object, oneOfType } from 'prop-types';
+import { array, object, oneOfType, string } from 'prop-types';
 import { Container, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -27,14 +27,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Layout = ({ children }) => {
+const Layout = ({ children, country, active }) => {
   const classes = useStyles();
   return (
     <Container maxWidth="lg" className={classes.container}>
       <CssBaseline />
       <Sidebar />
       <main className={classes.main}>
-        <Header />
+        <Header country={country} active={active} />
         {children}
       </main>
     </Container>
@@ -43,6 +43,8 @@ const Layout = ({ children }) => {
 
 Layout.propTypes = {
   children: oneOfType([array, object]),
+  country: string,
+  active: string,
 };
 
 export default Layout;
