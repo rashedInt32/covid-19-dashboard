@@ -19,7 +19,7 @@ import messages from './messages';
 import { CountryContext } from '../Context/CountryContext';
 
 function HomePage({ intl }) {
-  const { myCountry, updateCountries } = useContext(CountryContext);
+  const { myCountry } = useContext(CountryContext);
 
   const tabs = [
     intl.formatMessage(messages.overall),
@@ -28,24 +28,20 @@ function HomePage({ intl }) {
     intl.formatMessage(messages.myCountry),
   ];
   let interval;
-  const refecthDataTime = 660000;
+  const refecthTime = 660000;
 
   const [data, setData] = useState({});
   const [countries, setCountries] = useState({});
+  const [country, setCountry] = useState('');
   const [renderData, setRenderData] = useState({});
-  const [shouldFetchData, setShouldFetchData] = useState(false);
-  const [activeTab, setActiveTab] = useState(
-    new Set([intl.formatMessage(messages.overall)]),
-  );
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const [activeTab, setActiveTab] = useState(new Set([tabs[0]]));
 
   useEffect(() => {
     getLatestData();
-    return () => clearInterval(interval);
-  }, [shouldFetchData]);
-
-  useEffect(() => {
     getCountriesData();
-  }, [shouldFetchData]);
+    return () => clearInterval(interval);
+  }, [shouldFetch]);
 
   const getLatestData = async () => {
     const [err, latest] = await getAllCases();
@@ -63,7 +59,7 @@ function HomePage({ intl }) {
     if (latest.data) {
       const lastUpdated = moment(latest.data.updated).fromNow('mm');
       const minutesAgo = lastUpdated.split(' ')[0];
-      refetchData(minutesAgo);
+      refetch(minutesAgo);
     }
   };
 
@@ -76,17 +72,33 @@ function HomePage({ intl }) {
       latest: countryLatest.data,
       previous: countryPrev.data,
     });
-
-    updateCountries(countryLatest.data);
   };
 
-  const refetchData = time => {
-    const remainingSecond = refecthDataTime - miliseconds(time);
+  const refetch = time => {
+    const remainingSecond = refecthTime - miliseconds(time);
     interval = setInterval(() => {
-      setShouldFetchData(!shouldFetchData);
+      setShouldFetch(!shouldFetch);
     }, remainingSecond);
   };
 
+  const onSelectCountry = c => {
+    setCountry(c);
+    setActiveTab(new Set([tabs[0]]));
+    const selectedCountry = getCountry(countries, { country: c });
+
+    setRenderData(
+      renderableData(selectedCountry.latest, selectedCountry.previous, false),
+    );
+    setData({ ...data, today: false, myCountry: false });
+  };
+
+  const onRemoveCountry = () => {
+    setCountry('');
+    setActiveTab(new Set([tabs[0]]));
+    setRenderData(renderableData(data.latest, data.previous, false));
+  };
+
+  // My country data
   const getMyCountry = getCountry(countries, myCountry);
 
   const handleTabChange = tab => {
@@ -127,7 +139,11 @@ function HomePage({ intl }) {
               {t}
             </TabButton>
           ))}
-          <CountryDropdown countries={countries.latest} onClick={() => {}} />
+          <CountryDropdown
+            countries={countries.latest}
+            onClick={onSelectCountry}
+            onRemove={onRemoveCountry}
+          />
         </>
       </TabWrapper>
       <RenderCard

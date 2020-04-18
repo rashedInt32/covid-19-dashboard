@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { array, object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
@@ -20,6 +20,7 @@ import {
   RemoveButton,
   Button,
 } from './DropDown/DropDown';
+import { CountryContext } from '../Context/CountryContext';
 
 // eslint-disable-next-line react/prop-types
 const RenderCountries = ({ countries, onClick }) => {
@@ -74,21 +75,25 @@ const RenderCountries = ({ countries, onClick }) => {
   );
 };
 
-const CountryDropdown = ({ countries, intl }) => {
+const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
   const [country, setCountry] = useState('');
   const [active, setActive] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
+
+  const { updateSelectedCountry } = useContext(CountryContext);
 
   const ref = useRef();
 
   const onClickCountry = c => {
     setCountry(c);
+    updateSelectedCountry(c);
     setActive(!active);
   };
   const removeCountry = () => {
     setCountry('');
     setBtnActive(false);
     setActive(false);
+    updateSelectedCountry('');
   };
 
   const showDropdown = () => {
@@ -115,7 +120,13 @@ const CountryDropdown = ({ countries, intl }) => {
           : intl.formatMessage(messages.selectCountry)}
       </Button>
 
-      <RemoveButton onClick={removeCountry} country={country}>
+      <RemoveButton
+        onClick={() => {
+          removeCountry();
+          onRemove();
+        }}
+        country={country}
+      >
         <CloseIcon fontSize="small" color="error" />
       </RemoveButton>
 
@@ -123,7 +134,10 @@ const CountryDropdown = ({ countries, intl }) => {
         <DropdownContent>
           <RenderCountries
             countries={countries}
-            onClick={c => onClickCountry(c)}
+            onClick={c => {
+              onClickCountry(c);
+              onClick(c);
+            }}
           />
         </DropdownContent>
       </Container>
