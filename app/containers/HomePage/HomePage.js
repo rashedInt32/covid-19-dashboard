@@ -38,12 +38,12 @@ function HomePage({ intl }) {
   const [activeTab, setActiveTab] = useState(new Set([tabs[0]]));
 
   useEffect(() => {
-    getLatestData();
-    getCountriesData();
+    getWorldWideCases();
+    getCasesByCountries();
     return () => clearInterval(interval);
   }, [shouldFetch]);
 
-  const getLatestData = async () => {
+  const getWorldWideCases = async () => {
     const [err, latest] = await getAllCases();
     const [error, previous] = await getAllCases({ yesterday: true });
     if (err || error) return;
@@ -63,7 +63,7 @@ function HomePage({ intl }) {
     }
   };
 
-  const getCountriesData = async () => {
+  const getCasesByCountries = async () => {
     const [err, countryLatest] = await getAllCountries();
     const [error, countryPrev] = await getAllCountries({ yesterday: true });
     if (err || error) return;
@@ -84,11 +84,9 @@ function HomePage({ intl }) {
   const onSelectCountry = c => {
     setCountry(c);
     setActiveTab(new Set([tabs[0]]));
-    const selectedCountry = getCountry(countries, { country: c });
+    const { latest, previous } = getCountry(countries, { country: c });
 
-    setRenderData(
-      renderableData(selectedCountry.latest, selectedCountry.previous, false),
-    );
+    setRenderData(renderableData(latest, previous, false));
     setData({ ...data, today: false, myCountry: false });
   };
 
@@ -99,11 +97,12 @@ function HomePage({ intl }) {
   };
 
   // My country data
-  const getMyCountry = getCountry(countries, myCountry);
+  const myCountryCases = getCountry(countries, myCountry);
 
   const handleTabChange = tab => {
     setActiveTab(new Set([tab]));
-    const { latest, previous } = data;
+    const { latest, previous } =
+      country === '' ? data : getCountry(countries, { country });
 
     switch (tab) {
       case intl.formatMessage(messages.today):
@@ -116,7 +115,7 @@ function HomePage({ intl }) {
         break;
       case intl.formatMessage(messages.myCountry):
         setRenderData(
-          renderableData(getMyCountry.latest, getMyCountry.previous, false),
+          renderableData(myCountryCases.latest, myCountryCases.previous, false),
         );
         setData({ ...data, today: false, myCountry: true });
         break;
