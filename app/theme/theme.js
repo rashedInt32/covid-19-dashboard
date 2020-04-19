@@ -16,6 +16,7 @@ export default createMuiTheme({
     lightBg: '#f8fbff',
     white: '#ffffff',
     grey: '#bdbdbd',
+    shadow: '0 0 15px 3px rgba(189, 189, 189, 0.1)',
   },
   borderRadiusBase: '8px',
   borderRadiusLarge: '20px',

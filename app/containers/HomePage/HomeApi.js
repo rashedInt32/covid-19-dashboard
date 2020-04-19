@@ -1,16 +1,26 @@
+/* eslint-disable no-return-await */
 import to from 'await-to-js';
 
 import { request } from 'utils/request';
-import { getCases, getCountries } from 'utils/apiRoutes';
+import {
+  getCases,
+  getCountries,
+  historical,
+  historicalAll,
+} from 'utils/apiRoutes';
 
-const getAllCases = async obj => {
-  const [err, resp] = await to(request.get(getCases(obj)));
-  return [err, resp];
+const getAllCases = async obj => await to(request.get(getCases(obj)));
+
+const getAllCountries = async obj => await to(request.get(getCountries(obj)));
+
+const getAllHistorical = async () => await to(request.get(historical));
+
+const getAllHistoricalByCountry = async () =>
+  await to(request.get(historicalAll));
+
+export {
+  getAllCases,
+  getAllCountries,
+  getAllHistorical,
+  getAllHistoricalByCountry,
 };
-
-const getAllCountries = async obj => {
-  const [err, resp] = await to(request.get(getCountries(obj)));
-  return [err, resp];
-};
-
-export { getAllCases, getAllCountries };

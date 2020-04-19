@@ -6,8 +6,14 @@ import moment from 'moment';
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
 import { miliseconds } from 'utils/miliseconds';
+import DrawBarChart from 'components/Chart/BarChart';
 
-import { getAllCases, getAllCountries } from './HomeApi';
+import {
+  getAllCases,
+  getAllCountries,
+  getAllHistorical,
+  getAllHistoricalByCountry,
+} from './HomeApi';
 import { renderableData } from './renderableData';
 import { getCountry } from './homeUtils/getCountry';
 
@@ -33,6 +39,7 @@ function HomePage({ intl }) {
   const [data, setData] = useState({});
   const [countries, setCountries] = useState({});
   const [country, setCountry] = useState('');
+  const [historical, setHistorical] = useState({});
   const [renderData, setRenderData] = useState({});
   const [shouldFetch, setShouldFetch] = useState(false);
   const [activeTab, setActiveTab] = useState(new Set([tabs[0]]));
@@ -42,6 +49,10 @@ function HomePage({ intl }) {
     getCasesByCountries();
     return () => clearInterval(interval);
   }, [shouldFetch]);
+
+  useEffect(() => {
+    getHistorical();
+  }, []);
 
   const getWorldWideCases = async () => {
     const [err, latest] = await getAllCases();
@@ -74,6 +85,16 @@ function HomePage({ intl }) {
     });
   };
 
+  const getHistorical = async () => {
+    const [err, history] = await getAllHistorical();
+    const [e, countriesHistory] = await getAllHistoricalByCountry();
+    if (err || e) return;
+    setHistorical({
+      overall: countriesHistory.data,
+      countries: history.data,
+    });
+  };
+
   const refetch = time => {
     const remainingSecond = refecthTime - miliseconds(time);
     interval = setInterval(() => {
@@ -91,12 +112,12 @@ function HomePage({ intl }) {
   };
 
   const onRemoveCountry = () => {
+    const { latest, previous } = data;
     setCountry('');
     setActiveTab(new Set([tabs[0]]));
-    setRenderData(renderableData(data.latest, data.previous, false));
+    setRenderData(renderableData(latest, previous, false));
   };
 
-  // My country data
   const myCountryCases = getCountry(countries, myCountry);
 
   const handleTabChange = tab => {
@@ -145,11 +166,15 @@ function HomePage({ intl }) {
           />
         </>
       </TabWrapper>
+
       <RenderCard
         data={renderData}
         today={data.today}
         myCountry={data.myCountry}
       />
+      {historical.overall && (
+        <DrawBarChart title="Confirmed" data={historical.overall.cases} />
+      )}
     </Layout>
   );
 }
