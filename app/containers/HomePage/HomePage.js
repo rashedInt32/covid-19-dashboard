@@ -9,6 +9,7 @@ import TabButton from 'components/TabButton';
 import { miliseconds } from 'utils/miliseconds';
 import DrawBarChart from 'components/Chart/BarChart';
 import DrawAreaChart from 'components/Chart/AreaChart';
+import DrawLineChart from 'components/Chart/LineChart';
 
 import {
   getAllCases,
@@ -17,6 +18,7 @@ import {
   getAllHistoricalByCountry,
 } from './HomeApi';
 import { renderableData } from './renderableData';
+import { renderableHistory } from './renderableHistory';
 import { getCountry } from './homeUtils/getCountry';
 
 import TabWrapper from './Tab/TabWrapper';
@@ -42,6 +44,7 @@ function HomePage({ intl }) {
   const [countries, setCountries] = useState({});
   const [country, setCountry] = useState('');
   const [historical, setHistorical] = useState({});
+  const [renderHistorical, setRenderHistorical] = useState({});
   const [renderData, setRenderData] = useState({});
   const [shouldFetch, setShouldFetch] = useState(false);
   const [activeTab, setActiveTab] = useState(new Set([tabs[0]]));
@@ -95,6 +98,7 @@ function HomePage({ intl }) {
       overall: countriesHistory.data,
       countries: history.data,
     });
+    setRenderHistorical(countriesHistory.data);
   };
 
   const refetch = time => {
@@ -111,6 +115,7 @@ function HomePage({ intl }) {
 
     setRenderData(renderableData(latest, previous, false));
     setData({ ...data, today: false, myCountry: false });
+    setRenderHistorical(renderableHistory(historical.countries, c));
   };
 
   const onRemoveCountry = () => {
@@ -118,6 +123,7 @@ function HomePage({ intl }) {
     setCountry('');
     setActiveTab(new Set([tabs[0]]));
     setRenderData(renderableData(latest, previous, false));
+    setRenderHistorical(historical.overall);
   };
 
   const myCountryCases = getCountry(countries, myCountry);
@@ -174,13 +180,14 @@ function HomePage({ intl }) {
         today={data.today}
         myCountry={data.myCountry}
       />
-      {historical.overall && (
+      {renderHistorical.cases && (
         <Grid container spacing={2}>
-          <DrawBarChart title="Confirmed" data={historical.overall.cases} />
+          <DrawBarChart title="Confirmed" data={renderHistorical.cases} />
           <DrawAreaChart
             title="Recovered"
-            data={historical.overall.recovered}
+            data={renderHistorical.recovered}
           />
+          <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
         </Grid>
       )}
     </Layout>
