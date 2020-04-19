@@ -1,23 +1,22 @@
 import React from 'react';
 import { string, object } from 'prop-types';
 import {
-  BarChart,
+  AreaChart,
   ResponsiveContainer,
-  Bar,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
 } from 'recharts';
 import { Grid } from '@material-ui/core';
-import CustomBar from './CustomBar';
 import CustomTooltip from './CustomToolTip';
 import ChartWrapper from './ChartWrapper';
 import ChartTitle from './ChartTitle';
 
-const DrawBarChart = ({ title, data }) => {
+const DrawAreaChart = ({ title, data }) => {
   let modifiedData = Object.entries(data);
   modifiedData = modifiedData.map(item => {
-    const objectOfArry = { name: item[0], cases: item[1] };
+    const objectOfArry = { name: item[0], recovered: item[1] };
     return objectOfArry;
   });
   return (
@@ -25,7 +24,7 @@ const DrawBarChart = ({ title, data }) => {
       <ChartWrapper>
         <ChartTitle>{title}</ChartTitle>
         <ResponsiveContainer>
-          <BarChart
+          <AreaChart
             width={600}
             height={300}
             data={modifiedData}
@@ -34,31 +33,34 @@ const DrawBarChart = ({ title, data }) => {
               bottom: 30,
             }}
           >
-            <Tooltip content={<CustomTooltip name="Cases" color="#f9345e" />} />
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="2%" stopColor="#1cb142" stopOpacity={0.5} />
+                <stop offset="98%" stopColor="#1cb14285" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <Tooltip
+              content={<CustomTooltip name="Recovered" color="#1cb142" />}
+            />
             <YAxis type="number" hide />
-            <XAxis
-              type="category"
-              dataKey="name"
-              tick={false}
-              tickLine={false}
-              hide
+            <XAxis type="category" hide />
+            <Area
+              type="monotone"
+              dataKey="recovered"
+              stroke="#1cb142"
+              fillOpacity={1}
+              fill="url(#colorUv)"
             />
-            <Bar
-              dataKey="cases"
-              shape={<CustomBar />}
-              maxBarSize={30}
-              minPointSize={0}
-            />
-          </BarChart>
+          </AreaChart>
         </ResponsiveContainer>
       </ChartWrapper>
     </Grid>
   );
 };
 
-DrawBarChart.propTypes = {
+DrawAreaChart.propTypes = {
   title: string,
   data: object,
 };
 
-export default DrawBarChart;
+export default DrawAreaChart;

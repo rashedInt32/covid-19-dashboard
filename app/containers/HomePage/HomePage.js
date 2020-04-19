@@ -2,11 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
+import { Grid } from '@material-ui/core';
 
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
 import { miliseconds } from 'utils/miliseconds';
 import DrawBarChart from 'components/Chart/BarChart';
+import DrawAreaChart from 'components/Chart/AreaChart';
 
 import {
   getAllCases,
@@ -173,7 +175,13 @@ function HomePage({ intl }) {
         myCountry={data.myCountry}
       />
       {historical.overall && (
-        <DrawBarChart title="Confirmed" data={historical.overall.cases} />
+        <Grid container spacing={2}>
+          <DrawBarChart title="Confirmed" data={historical.overall.cases} />
+          <DrawAreaChart
+            title="Recovered"
+            data={historical.overall.recovered}
+          />
+        </Grid>
       )}
     </Layout>
   );
