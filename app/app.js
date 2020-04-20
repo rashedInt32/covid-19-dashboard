@@ -16,9 +16,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
-import FontFaceObserver from 'fontfaceobserver';
 import './theme/reset.css';
-
 // Import root app
 import App from 'containers/App';
 
@@ -35,13 +33,6 @@ import configureStore from './configureStore';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
-
-const montserratObserver = new FontFaceObserver('Montserrat', {});
-
-// When Montserrat is loaded, add a font-family using Montserrat to the body
-montserratObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-});
 
 // Create redux store with history
 const initialState = {};
