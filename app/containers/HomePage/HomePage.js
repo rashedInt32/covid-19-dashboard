@@ -54,6 +54,8 @@ function HomePage({ intl }) {
 
   useEffect(() => {
     getWorldWideCases();
+    getCasesByCountries();
+    getHistorical();
     return () => clearInterval(interval);
   }, [shouldFetch]);
 
@@ -74,11 +76,6 @@ function HomePage({ intl }) {
       const lastUpdated = moment(latest.data.updated).fromNow('mm');
       const minutesAgo = lastUpdated.split(' ')[0];
       refetch(minutesAgo);
-    }
-
-    if (latest.data && previous.data) {
-      await getCasesByCountries();
-      await getHistorical();
     }
   };
 

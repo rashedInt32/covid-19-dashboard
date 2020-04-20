@@ -131,6 +131,12 @@ const RemoveButton = styled.button`
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.danger};
   }
+  span {
+    font-size: 20px;
+    color: ${({ theme }) => theme.colors.danger};
+    position: relative;
+    top: 1px;
+  }
 `;
 
 const Button = styled(TabButton)`
