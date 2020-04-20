@@ -77,7 +77,6 @@ function HomePage({ intl }) {
     }
 
     if (latest.data && previous.data) {
-      await getCasesByCountries();
       await getHistorical();
     }
   };
@@ -101,6 +100,9 @@ function HomePage({ intl }) {
       overall: countriesHistory.data,
       countries: history.data,
     });
+    if (history.data) {
+      await getCasesByCountries();
+    }
     setRenderHistorical(countriesHistory.data);
   };
 
