@@ -41,11 +41,13 @@ function HomePage({ intl }) {
   const refecthTime = 660000;
 
   const [data, setData] = useState({});
+  const [renderData, setRenderData] = useState({});
+  // Cases by country
   const [countries, setCountries] = useState({});
-  const [country, setCountry] = useState('');
+  // Timeline, last 30days
   const [historical, setHistorical] = useState({});
   const [renderHistorical, setRenderHistorical] = useState({});
-  const [renderData, setRenderData] = useState({});
+  const [country, setCountry] = useState('');
   const [shouldFetch, setShouldFetch] = useState(false);
   const [activeTab, setActiveTab] = useState(new Set([tabs[0]]));
 
@@ -146,11 +148,15 @@ function HomePage({ intl }) {
         setRenderData(
           renderableData(myCountryCases.latest, myCountryCases.previous, false),
         );
+        setRenderHistorical(
+          renderableHistory(historical.countries, myCountry.country),
+        );
         setData({ ...data, today: false, myCountry: true });
         break;
       default:
         setRenderData(renderableData(latest, previous, false));
         setData({ ...data, today: false, myCountry: false });
+        setRenderHistorical(historical.overall);
     }
   };
 

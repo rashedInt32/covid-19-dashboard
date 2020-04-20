@@ -1,27 +1,9 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styled-components';
+import { Grid } from '@material-ui/core';
 
 import Loader from './Loader';
-
-const Main = styled.div`
-  position: relative;
-  display: flex;
-  padding-right: 20px;
-  min-width: 25%;
-  margin-bottom: 20px;
-
-  @media (max-width: 992px) {
-    min-width: 25%;
-  }
-  @media (max-width: 768px) {
-    min-width: 50%;
-  }
-  @media (max-width: 576px) {
-    min-width: 100%;
-  }
-
-`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -91,7 +73,7 @@ const Card = ({ title, value, percent, color }) => {
   const isPositive = percent > 0;
 
   return (
-    <Main>
+    <Grid item md={3}>
       <Wrapper>
         <Title>{title}</Title>
         <Count color={color}>{value !== 0 ? formatedNumber : 0}</Count>
@@ -99,7 +81,7 @@ const Card = ({ title, value, percent, color }) => {
           {percent} %
         </PercentText>
       </Wrapper>
-    </Main>
+    </Grid>
   );
 };
 
