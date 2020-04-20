@@ -6,6 +6,7 @@ import { Grid } from '@material-ui/core';
 
 import Layout from 'components/Layouts';
 import TabButton from 'components/TabButton';
+import Box from 'components/Box';
 import { miliseconds } from 'utils/miliseconds';
 import DrawBarChart from 'components/Chart/BarChart';
 import DrawAreaChart from 'components/Chart/AreaChart';
@@ -194,7 +195,11 @@ function HomePage({ intl }) {
       </Grid>
 
       <div style={{ width: '100%', height: 400 }}>
-        {countries.latest && <Map />}
+        {countries.latest && (
+          <Box title="Map visualization for total cases by country">
+            <Map countries={countries.latest} />
+          </Box>
+        )}
       </div>
     </Layout>
   );
