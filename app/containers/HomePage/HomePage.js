@@ -194,6 +194,7 @@ function HomePage({ intl }) {
         <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
       </Grid>
 
+
       <div style={{ width: '100%', height: 400 }}>
         {countries.latest && (
           <Box title="Map visualization for total cases by country">
