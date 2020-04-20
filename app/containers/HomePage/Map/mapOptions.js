@@ -26,7 +26,6 @@ export const mapOptions = countries => {
     series: [
       {
         mapType: 'world',
-        roam: 'scale',
         zoom: 1,
         roam: 'move',
         data,

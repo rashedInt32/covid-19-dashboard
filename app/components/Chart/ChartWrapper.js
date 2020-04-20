@@ -10,7 +10,7 @@ const ChartContainer = styled.div`
   position: relative;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.white};
-  padding: 15px 20px 40px;
+  padding: 20px 20px 50px;
   width: 100%;
   height: 250px;
   border-radius: 10px;
