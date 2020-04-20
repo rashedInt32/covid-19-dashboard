@@ -9,7 +9,7 @@ import {
   YAxis,
   Tooltip,
 } from 'recharts';
-import { Grid } from '@material-ui/core';
+import Grid from 'components/Grid';
 
 import CustomTooltip from './CustomToolTip';
 import ChartWrapper from './ChartWrapper';
@@ -19,7 +19,7 @@ const DrawAreaChart = ({ title, data }) => {
   const themeContext = useContext(ThemeContext);
   const modifiedData = makeChartData(data, 'recovered');
   return (
-    <Grid item md={4} xs={12}>
+    <Grid className="lg-4">
       <ChartWrapper
         title={title}
         data={modifiedData}

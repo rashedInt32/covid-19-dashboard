@@ -2,9 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
-import { Grid } from '@material-ui/core';
 
 import Layout from 'components/Layouts';
+import Grid from 'components/Grid';
 import TabButton from 'components/TabButton';
 import Box from 'components/Box';
 import { miliseconds } from 'utils/miliseconds';
@@ -25,7 +25,6 @@ import { getCountry } from './homeUtils/getCountry';
 import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
 import CountryDropdown from './CountryDropdown';
-import Map from './Map/Map';
 
 import messages from './messages';
 import { CountryContext } from '../Context/CountryContext';
@@ -164,43 +163,40 @@ function HomePage({ intl }) {
 
   return (
     <Layout country={country} active={activeTab.values().next().value}>
-      <TabWrapper>
-        <>
-          {tabs.map(t => (
-            <TabButton
-              key={t}
-              onClick={() => handleTabChange(t)}
-              active={activeTab.has(t)}
-            >
-              {t}
-            </TabButton>
-          ))}
-          <CountryDropdown
-            countries={countries.latest}
-            onClick={onSelectCountry}
-            onRemove={onRemoveCountry}
+      <>
+        <TabWrapper>
+          <>
+            {tabs.map(t => (
+              <TabButton
+                key={t}
+                onClick={() => handleTabChange(t)}
+                active={activeTab.has(t)}
+              >
+                {t}
+              </TabButton>
+            ))}
+            <CountryDropdown
+              countries={countries.latest}
+              onClick={onSelectCountry}
+              onRemove={onRemoveCountry}
+            />
+          </>
+        </TabWrapper>
+
+        <RenderCard
+          data={renderData}
+          today={data.today}
+          myCountry={data.myCountry}
+        />
+        <Grid className="container">
+          <DrawBarChart title="Confirmed" data={renderHistorical.cases} />
+          <DrawAreaChart
+            title="Recovered"
+            data={renderHistorical.recovered}
           />
-        </>
-      </TabWrapper>
-
-      <RenderCard
-        data={renderData}
-        today={data.today}
-        myCountry={data.myCountry}
-      />
-      <Grid container spacing={2}>
-        <DrawBarChart title="Confirmed" data={renderHistorical.cases} />
-        <DrawAreaChart title="Recovered" data={renderHistorical.recovered} />
-        <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
-      </Grid>
-
-      <div style={{ width: '100%', height: 400 }}>
-        {countries.latest && (
-          <Box title="Map visualization for total cases by country">
-            <Map countries={countries.latest} />
-          </Box>
-        )}
-      </div>
+          <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
+        </Grid>
+      </>
     </Layout>
   );
 }

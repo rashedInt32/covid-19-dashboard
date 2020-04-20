@@ -2,7 +2,6 @@ import React, { useState, useRef, useContext } from 'react';
 import { array, object, func } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
-import CloseIcon from '@material-ui/icons/Close';
 
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import messages from './messages';
@@ -128,7 +127,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
         }}
         country={country}
       >
-        <CloseIcon fontSize="small" color="error" />
+        <span>&times;</span>
       </RemoveButton>
 
       <Container className={active ? 'active' : ''} ref={ref}>

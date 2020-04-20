@@ -1,8 +1,7 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
-
+import Grid from './Grid';
 import Loader from './Loader';
 
 const Wrapper = styled.div`
@@ -73,7 +72,7 @@ const Card = ({ title, value, percent, color }) => {
   const isPositive = percent > 0;
 
   return (
-    <Grid item xs={12} md={3} sm={6}>
+    <Grid className="lg-3">
       <Wrapper>
         <Title>{title}</Title>
         <Count color={color}>{value !== 0 ? formatedNumber : 0}</Count>

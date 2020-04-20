@@ -3,10 +3,11 @@ import { object, bool } from 'prop-types';
 import { ThemeContext } from 'styled-components';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
-import { Grid } from '@material-ui/core';
+
 
 import messages from 'containers/HomePage/messages';
 import Card from 'components/Card';
+import Grid from 'components/Grid';
 import { getPercent } from 'utils/percent';
 
 import CardWrapper from './CardWrapper';
@@ -23,7 +24,7 @@ const RenderCard = ({ intl, data, today }) => {
 
   return (
     <CardWrapper>
-      <Grid container spacing={2}>
+      <Grid className="container">
         <Card
           title={intl.formatMessage(messages.confirm)}
           value={!_.isEmpty(data) ? data.latest.cases : null}

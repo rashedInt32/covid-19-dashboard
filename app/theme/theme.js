@@ -1,6 +1,5 @@
-import { createMuiTheme } from '@material-ui/core/styles';
 
-export default createMuiTheme({
+const theme = {
   colors: {
     primary: '#6236ff',
     primaryLight: 'rgba(98, 54, 255, 0.2)',
@@ -23,4 +22,6 @@ export default createMuiTheme({
   typography: {
     fontFamily: ['Montserrat', 'sans-serif'],
   },
-});
+};
+
+export default theme;

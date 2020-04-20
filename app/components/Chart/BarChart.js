@@ -8,8 +8,9 @@ import {
   YAxis,
   Tooltip,
 } from 'recharts';
-import { Grid } from '@material-ui/core';
 import { ThemeContext } from 'styled-components';
+
+import Grid from 'components/Grid';
 
 import CustomBar from './CustomBar';
 import CustomTooltip from './CustomToolTip';
@@ -20,7 +21,7 @@ const DrawBarChart = ({ title, data }) => {
   const themeContext = useContext(ThemeContext);
   const modifiedData = makeChartData(data, 'cases');
   return (
-    <Grid item md={4} xs={12}>
+    <Grid className="lg-4">
       <ChartWrapper
         title={title}
         loaderColor={themeContext.colors.danger}

@@ -9,7 +9,6 @@
 
 import React, { useEffect } from 'react';
 
-import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 
 import Router from 'containers/Router';
@@ -26,13 +25,13 @@ export default function App() {
   }, []);
 
   return (
-    <MuiThemeProvider theme={Theme}>
-      <ThemeProvider theme={Theme}>
-        <CountryContextProvider>
+    <>
+      <CountryContextProvider>
+        <ThemeProvider theme={Theme}>
           <Router />
-        </CountryContextProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </CountryContextProvider>
       <GlobalStyle />
-    </MuiThemeProvider>
+    </>
   );
 }
