@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { string, object } from 'prop-types';
+import { ThemeContext } from 'styled-components';
 import {
   AreaChart,
   ResponsiveContainer,
@@ -9,20 +10,21 @@ import {
   Tooltip,
 } from 'recharts';
 import { Grid } from '@material-ui/core';
+
 import CustomTooltip from './CustomToolTip';
 import ChartWrapper from './ChartWrapper';
-import ChartTitle from './ChartTitle';
+import { makeChartData } from './chartData';
 
 const DrawAreaChart = ({ title, data }) => {
-  let modifiedData = Object.entries(data);
-  modifiedData = modifiedData.map(item => {
-    const objectOfArry = { name: item[0], recovered: item[1] };
-    return objectOfArry;
-  });
+  const themeContext = useContext(ThemeContext);
+  const modifiedData = makeChartData(data, 'recovered');
   return (
     <Grid item md={4}>
-      <ChartWrapper>
-        <ChartTitle>{title}</ChartTitle>
+      <ChartWrapper
+        title={title}
+        data={modifiedData}
+        loaderColor={themeContext.colors.success}
+      >
         <ResponsiveContainer>
           <AreaChart
             width={600}

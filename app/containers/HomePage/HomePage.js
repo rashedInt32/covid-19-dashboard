@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
+import _ from 'lodash';
 import { Grid } from '@material-ui/core';
 
 import Layout from 'components/Layouts';
@@ -54,12 +55,9 @@ function HomePage({ intl }) {
   useEffect(() => {
     getWorldWideCases();
     getCasesByCountries();
+    getHistorical();
     return () => clearInterval(interval);
   }, [shouldFetch]);
-
-  useEffect(() => {
-    getHistorical();
-  }, []);
 
   const getWorldWideCases = async () => {
     const [err, latest] = await getAllCases();
@@ -186,16 +184,11 @@ function HomePage({ intl }) {
         today={data.today}
         myCountry={data.myCountry}
       />
-      {renderHistorical.cases && (
-        <Grid container spacing={2}>
-          <DrawBarChart title="Confirmed" data={renderHistorical.cases} />
-          <DrawAreaChart
-            title="Recovered"
-            data={renderHistorical.recovered}
-          />
-          <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
-        </Grid>
-      )}
+      <Grid container spacing={2}>
+        <DrawBarChart title="Confirmed" data={renderHistorical.cases} />
+        <DrawAreaChart title="Recovered" data={renderHistorical.recovered} />
+        <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
+      </Grid>
     </Layout>
   );
 }

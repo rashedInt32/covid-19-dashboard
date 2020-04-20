@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { string, object } from 'prop-types';
 import {
   LineChart,
@@ -9,20 +9,22 @@ import {
   Tooltip,
 } from 'recharts';
 import { Grid } from '@material-ui/core';
+import { ThemeContext } from 'styled-components';
+
 import CustomTooltip from './CustomToolTip';
 import ChartWrapper from './ChartWrapper';
-import ChartTitle from './ChartTitle';
+import { makeChartData } from './chartData';
 
 const DrawLineChart = ({ title, data }) => {
-  let modifiedData = Object.entries(data);
-  modifiedData = modifiedData.map(item => {
-    const objectOfArry = { name: item[0], deaths: item[1] };
-    return objectOfArry;
-  });
+  const themeContext = useContext(ThemeContext);
+  const modifiedData = makeChartData(data, 'deaths');
   return (
     <Grid item md={4}>
-      <ChartWrapper>
-        <ChartTitle>{title}</ChartTitle>
+      <ChartWrapper
+        title={title}
+        loaderColor={themeContext.colors.primary}
+        data={modifiedData}
+      >
         <ResponsiveContainer>
           <LineChart
             width={600}

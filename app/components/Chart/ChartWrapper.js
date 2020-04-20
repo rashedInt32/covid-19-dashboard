@@ -1,5 +1,12 @@
+import React from 'react';
 import styled from 'styled-components';
-const ChartWrapper = styled.div`
+import { string, element, array } from 'prop-types';
+import _ from 'lodash';
+
+import ChartTitle from './ChartTitle';
+import Loader from '../Loader';
+
+const ChartContainer = styled.div`
   position: relative;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.white};
@@ -9,5 +16,33 @@ const ChartWrapper = styled.div`
   border-radius: 10px;
   box-shadow: ${({ theme }) => theme.colors.shadow};
 `;
+
+const LoaderContent = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+`;
+
+const ChartWrapper = ({ title, loaderColor, data, children }) => (
+  <ChartContainer>
+    <ChartTitle>{title}</ChartTitle>
+    {!_.isEmpty(data) ? (
+      children
+    ) : (
+      <LoaderContent>
+        <Loader size={30} color={loaderColor} borderWidth={4} />
+      </LoaderContent>
+    )}
+  </ChartContainer>
+);
+
+ChartWrapper.propTypes = {
+  title: string,
+  loaderColor: string,
+  data: array,
+  children: element,
+};
 
 export default ChartWrapper;
