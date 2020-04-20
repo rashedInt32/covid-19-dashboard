@@ -63,6 +63,9 @@ const DropdownContent = styled.div`
   padding-top: 0;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: 0 0 15px 3px rgba(189, 189, 189, 0.1);
+  @media (max-width: 576px) {
+    width: 100%;
+  }
 `;
 
 const Container = styled.div`
@@ -70,6 +73,7 @@ const Container = styled.div`
   padding-top: 15px;
   transform: translateY(30px);
   left: 0;
+  margin-top: -10px;
   width: 400px;
   opacity: 0;
   visibility: hidden;
@@ -79,6 +83,9 @@ const Container = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0px);
+  }
+  @media (max-width: 576px) {
+    width: 100%;
   }
 `;
 
@@ -105,7 +112,9 @@ const Input = styled.input`
 `;
 
 const Main = styled.div`
-  position: relative;
+  @media (min-width: 576px) {
+    position: relative;
+  }
 `;
 
 const RemoveButton = styled.button`
@@ -117,6 +126,7 @@ const RemoveButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease-in;
   transform: ${({ country }) => (country !== '' ? `Scale(1)` : `Scale(0)`)};
+  margin-bottom: 10px;
 
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.danger};

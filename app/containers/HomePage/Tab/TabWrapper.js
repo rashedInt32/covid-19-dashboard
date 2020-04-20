@@ -5,6 +5,7 @@ const TabWrapper = styled.div`
   display: flex;
   align-items: center;
   padding-top: 40px;
+  flex-wrap: wrap;
 `;
 
 export default TabWrapper;

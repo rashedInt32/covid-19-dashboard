@@ -73,7 +73,7 @@ const Card = ({ title, value, percent, color }) => {
   const isPositive = percent > 0;
 
   return (
-    <Grid item md={3}>
+    <Grid item xs={12} md={3} sm={6}>
       <Wrapper>
         <Title>{title}</Title>
         <Count color={color}>{value !== 0 ? formatedNumber : 0}</Count>

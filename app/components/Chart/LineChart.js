@@ -19,7 +19,7 @@ const DrawLineChart = ({ title, data }) => {
   const themeContext = useContext(ThemeContext);
   const modifiedData = makeChartData(data, 'deaths');
   return (
-    <Grid item md={4}>
+    <Grid item md={4} xs={12}>
       <ChartWrapper
         title={title}
         loaderColor={themeContext.colors.primary}

@@ -20,7 +20,7 @@ const DrawBarChart = ({ title, data }) => {
   const themeContext = useContext(ThemeContext);
   const modifiedData = makeChartData(data, 'cases');
   return (
-    <Grid item md={4}>
+    <Grid item md={4} xs={12}>
       <ChartWrapper
         title={title}
         loaderColor={themeContext.colors.danger}
@@ -36,7 +36,9 @@ const DrawBarChart = ({ title, data }) => {
               bottom: 30,
             }}
           >
-            <Tooltip content={<CustomTooltip name="Cases" color="#f9345e" />} />
+            <Tooltip
+              content={<CustomTooltip name="Cases" color="#f9345e" />}
+            />
             <YAxis type="number" hide />
             <XAxis
               type="category"

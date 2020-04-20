@@ -19,7 +19,7 @@ const DrawAreaChart = ({ title, data }) => {
   const themeContext = useContext(ThemeContext);
   const modifiedData = makeChartData(data, 'recovered');
   return (
-    <Grid item md={4}>
+    <Grid item md={4} xs={12}>
       <ChartWrapper
         title={title}
         data={modifiedData}

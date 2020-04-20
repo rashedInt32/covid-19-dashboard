@@ -10,6 +10,8 @@ const TabButton = styled.button`
   margin-right: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 10px;
+  outline: 0;
   border: 2px solid
     ${({ theme, active }) =>
       active ? theme.colors.primary : theme.colors.grey};
@@ -17,6 +19,10 @@ const TabButton = styled.button`
     active ? theme.colors.white : theme.colors.grey};
   background: ${({ theme, active }) =>
     active ? theme.colors.primary : 'transparent'};
+
+  @media (max-width: 576px) {
+    font-size: 11px;
+  }
 `;
 
 TabButton.propTypes = {

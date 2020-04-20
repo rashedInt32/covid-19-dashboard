@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
-import _ from 'lodash';
 import { Grid } from '@material-ui/core';
 
 import Layout from 'components/Layouts';

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import { Link } from 'react-router-dom';
@@ -40,20 +41,17 @@ const Items = styled.ul`
   padding-top: 30px;
 `;
 
-const Sidebar = () => {
-  const [active, setActive] = useState('/');
-  const handleMenuChange = path => setActive(path);
-
+const Sidebar = ({ active }) => {
   return (
     <SidebarWrapper>
       <Logo src={logo} />
       <Items>
-        <Item active={active} onClick={handleMenuChange} path="/">
+        <Item active={active} path="/">
           <Link to="/">
             <HomeOutlinedIcon />
           </Link>
         </Item>
-        <Item active={active} onClick={handleMenuChange} path="/other">
+        <Item active={active} path="/other">
           <Link to="/other">
             <HomeOutlinedIcon />
           </Link>
@@ -61,6 +59,10 @@ const Sidebar = () => {
       </Items>
     </SidebarWrapper>
   );
+};
+
+Sidebar.propTypes = {
+  active: string,
 };
 
 export default Sidebar;

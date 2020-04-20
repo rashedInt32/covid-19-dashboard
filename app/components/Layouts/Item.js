@@ -46,13 +46,8 @@ const List = styled.li`
   }
 `;
 
-const Item = ({ active, onClick, path, children }) => (
-  <List
-    active={active}
-    className={active === path ? 'active' : ''}
-    path={path}
-    onClick={() => onClick(path)}
-  >
+const Item = ({ active, path, children }) => (
+  <List active={active} className={active === path ? 'active' : ''} path={path}>
     {children}
   </List>
 );

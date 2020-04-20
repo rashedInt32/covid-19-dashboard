@@ -10,14 +10,11 @@ const useStyles = makeStyles(theme => ({
   container: {
     padding: 0,
     alignItems: 'stretch',
-    height: `100vh`,
     display: 'flex',
   },
   main: {
     position: 'relative',
     background: `${theme.colors.lightBg}`,
-    borderTopLeftRadius: `${theme.borderRadiusLarge}`,
-    borderBottomLeftRadius: `${theme.borderRadiusLarge}`,
     padding: '20px',
     width: '100%',
     [theme.breakpoints.up('lg')]: {
@@ -32,7 +29,6 @@ const Layout = ({ children, country, active }) => {
   return (
     <Container maxWidth="lg" className={classes.container}>
       <CssBaseline />
-      <Sidebar />
       <main className={classes.main}>
         <Header country={country} active={active} />
         {children}

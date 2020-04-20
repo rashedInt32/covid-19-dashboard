@@ -1,19 +1,21 @@
-/**
- * NotFoundPage
- *
- * This is the page we show when the user visits a url that doesn't have a route
- *
- */
-
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { object } from 'prop-types';
+import { injectIntl } from 'react-intl';
+
+import Layout from 'components/Layouts';
 
 import messages from './messages';
 
-export default function NotFound() {
+function NotFound({ intl }) {
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <Layout>
+      <h1>{intl.formatMessage(messages.header)}</h1>
+    </Layout>
   );
 }
+
+NotFound.propTypes = {
+  intl: object,
+};
+
+export default injectIntl(NotFound);
