@@ -24,6 +24,7 @@ import { getCountry } from './homeUtils/getCountry';
 import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
 import CountryDropdown from './CountryDropdown';
+import Map from './Map/Map';
 
 import messages from './messages';
 import { CountryContext } from '../Context/CountryContext';
@@ -191,6 +192,10 @@ function HomePage({ intl }) {
         <DrawAreaChart title="Recovered" data={renderHistorical.recovered} />
         <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
       </Grid>
+
+      <div style={{ width: '100%', height: 400 }}>
+        {countries.latest && <Map />}
+      </div>
     </Layout>
   );
 }
