@@ -127,7 +127,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
         }}
         country={country}
       >
-        <span>&times;</span>
+        <p>&times;</p>
       </RemoveButton>
 
       <Container className={active ? 'active' : ''} ref={ref}>

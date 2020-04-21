@@ -118,6 +118,7 @@ const Main = styled.div`
 `;
 
 const RemoveButton = styled.button`
+  position: relative;
   width: 30px;
   height: 30px;
   border-radius: 50px;
@@ -131,11 +132,15 @@ const RemoveButton = styled.button`
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.danger};
   }
-  span {
+  p {
     font-size: 20px;
     color: ${({ theme }) => theme.colors.danger};
-    position: relative;
-    top: 1px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    top: -1px;
+    left: 7px;
   }
 `;
 
