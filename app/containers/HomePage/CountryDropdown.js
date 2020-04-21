@@ -22,7 +22,7 @@ import {
 import { CountryContext } from '../Context/CountryContext';
 
 // eslint-disable-next-line react/prop-types
-const RenderCountries = ({ countries, onClick, selectedCountry }) => {
+const RenderCountries = ({ countries, onClick, selectedCountry, showFlag }) => {
   const [text, setText] = useState('');
   if (!countries) return null;
 
@@ -31,7 +31,7 @@ const RenderCountries = ({ countries, onClick, selectedCountry }) => {
       ? _.sortBy(countries, ['cases'])
       : _.filter(countries, c =>
           c.country.toLowerCase().includes(text.toLowerCase()),
-      );
+        );
 
   modifiedCountries =
     text === '' ? _.reverse(modifiedCountries) : modifiedCountries;
@@ -59,7 +59,9 @@ const RenderCountries = ({ countries, onClick, selectedCountry }) => {
               className={c.country === selectedCountry ? 'active' : ''}
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Image src={c.countryInfo.flag} atl={c.country} />
+                {showFlag && (
+                  <Image src={c.countryInfo.flag} atl={c.country} />
+                )}
                 <Name>{c.country}</Name>
               </div>
               <Cases>{new Intl.NumberFormat('en-IN').format(c.cases)}</Cases>
@@ -135,6 +137,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
           <RenderCountries
             countries={countries}
             selectedCountry={country}
+            showFlag={active}
             onClick={c => {
               onClickCountry(c);
               onClick(c);

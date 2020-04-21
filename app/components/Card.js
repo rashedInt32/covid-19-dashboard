@@ -19,6 +19,7 @@ const Title = styled.h5`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.secondary};
   padding-bottom: 10px;
+  font-weight: bold;
 `;
 
 const Count = styled.h2`
