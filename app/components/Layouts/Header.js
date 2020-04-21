@@ -15,14 +15,14 @@ const Content = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   display: flex;
-  margin-right: 30px;
+  margin-right: 20px;
   @media (max-width: 576px) {
     margin-right: 5px;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 49px;
   }
 `;
 
