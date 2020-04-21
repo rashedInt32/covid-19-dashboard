@@ -73,7 +73,7 @@ const Container = styled.div`
   position: absolute;
   padding-top: 15px;
   transform: translateY(30px);
-  right: 40px;
+  right: 0px;
   margin-top: -10px;
   width: 400px;
   opacity: 0;
@@ -120,19 +120,17 @@ const Main = styled.div`
 `;
 
 const RemoveButton = styled.button`
-  position: relative;
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  right: 14px;
+  top: 4px;
+  width: 24px;
+  height: 24px;
   border-radius: 50px;
   border: 2px solid ${({ theme }) => theme.colors.dangerLight};
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease-in;
   transform: ${({ country }) => (country !== '' ? `Scale(1)` : `Scale(0)`)};
-  margin-bottom: 10px;
-  @media (max-width: 576px) {
-    margin-bottom: 5px;
-  }
 
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.danger};
@@ -144,8 +142,8 @@ const RemoveButton = styled.button`
     align-items: center;
     position: absolute;
     height: 100%;
-    top: -1px;
-    left: 7px;
+    top: 0px;
+    left: 5px;
   }
 `;
 
@@ -161,6 +159,7 @@ const Button = styled(TabButton)`
     border: 2px solid ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.primary};
     background: ${({ theme }) => theme.colors.white};
+    padding-right: 40px;
   }
 
 

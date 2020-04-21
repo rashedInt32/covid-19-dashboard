@@ -12,7 +12,7 @@ const TabWrapper = styled.div`
     padding-top: 40px;
     position: absolute;
     top: 4px;
-    right: 0;
+    right: 30px;
   }
 `;
 
