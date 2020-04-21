@@ -10,6 +10,7 @@
 import React, { useEffect } from 'react';
 
 import { ThemeProvider } from 'styled-components';
+import ReactPixel from 'react-facebook-pixel';
 
 import Router from 'containers/Router';
 import CountryContextProvider from 'containers/Context/CountryContext';
@@ -18,6 +19,9 @@ import GlobalStyle from '../../theme/globalStyles';
 import Theme from '../../theme';
 
 export default function App() {
+  useEffect(() => {
+    ReactPixel.init('256807135498393');
+  }, []);
   return (
     <>
       <CountryContextProvider>
