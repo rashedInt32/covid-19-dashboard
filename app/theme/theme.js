@@ -15,9 +15,9 @@ const theme = {
     lightBg: '#f8fbff',
     white: '#ffffff',
     grey: '#bdbdbd',
-    shadow: '0 0 15px 3px rgba(189, 189, 189, 0.1)',
+    shadow: '0 0 10px 5px rgba(189, 189, 189, 0.2)',
   },
-  borderRadiusBase: '8px',
+  borderRadiusBase: '10px',
   borderRadiusLarge: '20px',
   typography: {
     fontFamily: ['Montserrat', 'sans-serif'],

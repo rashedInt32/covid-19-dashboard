@@ -10,6 +10,7 @@ const Image = styled.img`
 
 const Name = styled.h5`
   font-size: 14px;
+  font-weight: bold;
   color: ${({ theme }) => theme.colors.secondary};
   &.warning {
     width: 100%;
@@ -62,7 +63,7 @@ const DropdownContent = styled.div`
   padding: 20px;
   padding-top: 0;
   background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0 0 15px 3px rgba(189, 189, 189, 0.1);
+  box-shadow: ${({ theme }) => theme.colors.shadow};
   @media (max-width: 576px) {
     width: 100%;
   }
@@ -72,7 +73,7 @@ const Container = styled.div`
   position: absolute;
   padding-top: 15px;
   transform: translateY(30px);
-  left: 0;
+  right: 40px;
   margin-top: -10px;
   width: 400px;
   opacity: 0;
@@ -115,9 +116,7 @@ const Main = styled.div`
   @media (min-width: 576px) {
     position: relative;
   }
-  @media (max-width:576px) {
-    width: 100%;
-  }
+
 `;
 
 const RemoveButton = styled.button`
@@ -131,6 +130,9 @@ const RemoveButton = styled.button`
   transition: all 0.3s ease-in;
   transform: ${({ country }) => (country !== '' ? `Scale(1)` : `Scale(0)`)};
   margin-bottom: 10px;
+  @media (max-width: 576px) {
+    margin-bottom: 5px;
+  }
 
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.danger};
@@ -161,9 +163,7 @@ const Button = styled(TabButton)`
     background: ${({ theme }) => theme.colors.white};
   }
 
-  @media (max-width: 576px) {
-    width: 85%;
-  }
+
 `;
 export {
   Image,

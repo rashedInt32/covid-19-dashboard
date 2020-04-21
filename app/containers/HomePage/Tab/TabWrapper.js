@@ -6,9 +6,13 @@ const TabWrapper = styled.div`
   align-items: center;
   padding-top: 20px;
   flex-wrap: wrap;
+  position: relative;
 
-  @media (min-width: 576px) {
+  @media (min-width: 1200px) {
     padding-top: 40px;
+    position: absolute;
+    top: 4px;
+    right: 0;
   }
 `;
 

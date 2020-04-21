@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
     font-family: 'Montserrat', sans-serif;
+    background: #f8fbff;
   }
 
   #app {

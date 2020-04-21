@@ -8,15 +8,16 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 15px;
+  border-radius: ${({ theme }) => theme.borderRadiusBase};
   padding: 15px 20px;
   text-align: center;
-  box-shadow: 0 0 15px 3px rgba(189, 189, 189, 0.1);
+  box-shadow: ${({ theme }) => theme.colors.shadow};
   width: 100%;
+  min-height: 125px;
 `;
 
 const Title = styled.h5`
-  font-size: 16px;
+  font-size: 18px;
   color: ${({ theme }) => theme.colors.secondary};
   padding-bottom: 10px;
   font-weight: bold;

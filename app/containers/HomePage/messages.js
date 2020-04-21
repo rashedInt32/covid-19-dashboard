@@ -34,11 +34,11 @@ export default defineMessages({
   },
   confirm: {
     id: `${scope}.CardWrapper`,
-    defaultMessage: 'Aggregated Confirmed',
+    defaultMessage: 'Confirmed',
   },
   active: {
     id: `${scope}.CardWrapper`,
-    defaultMessage: 'Active Confirmed',
+    defaultMessage: 'Active',
   },
   recovered: {
     id: `${scope}.CardWrapper`,
