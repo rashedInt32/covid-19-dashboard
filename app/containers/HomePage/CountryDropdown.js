@@ -117,9 +117,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
         active={btnActive}
         className={country !== '' ? 'active' : ''}
       >
-        {country !== ''
-          ? country
-          : intl.formatMessage(messages.selectCountry)}
+        {country !== '' ? country : intl.formatMessage(messages.selectCountry)}
       </Button>
 
       <RemoveButton
