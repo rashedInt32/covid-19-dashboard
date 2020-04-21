@@ -21,6 +21,7 @@ import Theme from '../../theme';
 export default function App() {
   useEffect(() => {
     ReactPixel.init('256807135498393');
+    ReactPixel.pageView();
   }, []);
   return (
     <>

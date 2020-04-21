@@ -1,12 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import ReactPixel from 'react-facebook-pixel';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 const Routes = () => {
-  ReactPixel.pageView();
   return (
     <Switch>
       <Route path="/" component={HomePage} exact />
