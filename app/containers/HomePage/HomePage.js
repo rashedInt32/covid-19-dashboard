@@ -191,11 +191,8 @@ function HomePage({ intl }) {
           myCountry={data.myCountry}
         />
         <Grid className="container">
-          <DrawBarChart title="Confirmed" data={renderHistorical.cases} />
-          <DrawAreaChart
-            title="Recovered"
-            data={renderHistorical.recovered}
-          />
+          <DrawBarChart title="Cases" data={renderHistorical.cases} />
+          <DrawAreaChart title="Recovered" data={renderHistorical.recovered} />
           <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
         </Grid>
       </>

@@ -13,7 +13,10 @@ const Wrapper = styled.div`
   text-align: center;
   box-shadow: ${({ theme }) => theme.colors.shadow};
   width: 100%;
-  min-height: 125px;
+  min-height: 110px;
+  @media (min-width: 576px) {
+    min-height: 125px;
+  }
 `;
 
 const Title = styled.h5`
