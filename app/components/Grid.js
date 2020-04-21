@@ -10,15 +10,10 @@ const Grid = styled.div`
   }
   &.lg-3 {
     padding: 8px;
-    width: 100%;
-    max-width: 100%;
-    flex-basis: 100%;
-    @media (min-width: 576px) {
-      flex-grow: 0;
-      max-width: 100%;
-      flex-basis: 100%;
-      width: 100%;
-    }
+    width: 50%%;
+    max-width: 50%;
+    flex-basis: 50%;
+
     @media (min-width: 768px) {
       flex-grow: 0;
       max-width: 50%;
@@ -34,14 +29,9 @@ const Grid = styled.div`
   &.lg-4 {
     padding: 8px;
     width: 100%;
+    flex-grow: 0;
     max-width: 100%;
     flex-basis: 100%;
-
-    @media (min-width: 576px) {
-      flex-grow: 0;
-      max-width: 100%;
-      flex-basis: 100%;
-    }
 
     @media (min-width: 768px) {
       flex-grow: 0;

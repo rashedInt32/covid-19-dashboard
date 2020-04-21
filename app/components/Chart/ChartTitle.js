@@ -1,5 +1,5 @@
 import React from 'react';
-import { element } from 'prop-types';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 
 const TitleWrapper = styled.div`
@@ -29,7 +29,7 @@ const ChartTitle = ({ children }) => (
 );
 
 ChartTitle.propTypes = {
-  children: element,
+  children: string,
 };
 
 export default ChartTitle;

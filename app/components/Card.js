@@ -7,7 +7,7 @@ import Loader from './Loader';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ color }) => color};
   border-radius: ${({ theme }) => theme.borderRadiusBase};
   padding: 15px 20px;
   text-align: center;
@@ -16,22 +16,34 @@ const Wrapper = styled.div`
   min-height: 110px;
   @media (min-width: 576px) {
     min-height: 125px;
+    background: ${({ theme }) => theme.colors.white};
   }
 `;
 
 const Title = styled.h5`
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.secondary};
-  padding-bottom: 10px;
+  font-size: 14px;
+  color: #f9f9f9;
+  padding-bottom: 2px;
   font-weight: bold;
+  @media (min-width: 576px) {
+    color: ${({ theme }) => theme.colors.secondary};
+    padding-bottom: 10px;
+    font-size: 18px;
+  }
 `;
 
 const Count = styled.h2`
-  font-size: 35px;
+  font-size: 20px;
   line-height: 40px;
   font-weight: bold;
-  padding-bottom: 10px;
-  color: ${({ color, theme }) => color || theme.colors.primary};
+  padding-bottom: 5px;
+  color: ${({ theme }) => theme.colors.white};
+  @media (min-width: 576px) {
+    color: ${({ color, theme }) => color || theme.colors.primary};
+    font-size: 35px;
+    padding-bottom: 10px;
+  }
+
 `;
 
 const PercentText = styled.p`
@@ -42,6 +54,7 @@ const PercentText = styled.p`
   align-items: center;
   justify-content: center;
   flex-direction: row-reverse;
+
   &:before {
     content: '';
     width: 0;
@@ -64,6 +77,15 @@ const PercentText = styled.p`
       margin-top: 6px;
     }
   }
+  @media (max-width: 576px) {
+    color: #f9f9f9;
+    &.increase:before {
+      border-bottom: 6px solid ${({ theme }) => theme.colors.white};
+    }
+    &.decrease:before {
+      border-top: 6px solid ${({ theme }) => theme.colors.white};
+    }
+  }
 `;
 
 // eslint-disable-next-line react/prop-types
@@ -78,7 +100,7 @@ const Card = ({ title, value, percent, color }) => {
 
   return (
     <Grid className="lg-3">
-      <Wrapper>
+      <Wrapper color={color}>
         <Title>{title}</Title>
         <Count color={color}>{value !== 0 ? formatedNumber : 0}</Count>
         <PercentText className={isPositive ? 'increase' : 'decrease'}>
