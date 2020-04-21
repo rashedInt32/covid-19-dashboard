@@ -162,7 +162,7 @@ const Button = styled(TabButton)`
   }
 
   @media (max-width: 576px) {
-    width: 90%;
+    width: 85%;
   }
 `;
 export {
