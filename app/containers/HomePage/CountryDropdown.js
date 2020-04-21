@@ -18,6 +18,7 @@ import {
   Main,
   RemoveButton,
   Button,
+  TriggerContent,
 } from './DropDown/DropDown';
 import { CountryContext } from '../Context/CountryContext';
 
@@ -112,23 +113,27 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
 
   return (
     <Main>
-      <Button
-        onClick={showDropdown}
-        active={btnActive}
-        className={country !== '' ? 'active' : ''}
-      >
-        {country !== '' ? country : intl.formatMessage(messages.selectCountry)}
-      </Button>
+      <TriggerContent>
+        <Button
+          onClick={showDropdown}
+          active={btnActive}
+          className={country !== '' ? 'active' : ''}
+        >
+          {country !== ''
+            ? country
+            : intl.formatMessage(messages.selectCountry)}
+        </Button>
 
-      <RemoveButton
-        onClick={() => {
-          removeCountry();
-          onRemove();
-        }}
-        country={country}
-      >
-        <p>&times;</p>
-      </RemoveButton>
+        <RemoveButton
+          onClick={() => {
+            removeCountry();
+            onRemove();
+          }}
+          country={country}
+        >
+          <p>&times;</p>
+        </RemoveButton>
+      </TriggerContent>
 
       <Container className={active ? 'active' : ''} ref={ref}>
         <DropdownContent>

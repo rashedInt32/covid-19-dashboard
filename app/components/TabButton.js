@@ -7,7 +7,7 @@ const TabButton = styled.button`
   border-radius: 30px;
   font-size: 14px;
   font-weight: bold;
-  margin-right: 10px;
+  margin-left: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-bottom: 10px;
@@ -21,7 +21,7 @@ const TabButton = styled.button`
     active ? theme.colors.primary : 'transparent'};
 
   @media (max-width: 576px) {
-    margin-right: 3px;
+    margin-left: 3px;
     margin-bottom: 5px;
   }
 `;

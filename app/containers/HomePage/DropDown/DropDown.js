@@ -121,7 +121,7 @@ const Main = styled.div`
 
 const RemoveButton = styled.button`
   position: absolute;
-  right: 14px;
+  right: 4px;
   top: 4px;
   width: 24px;
   height: 24px;
@@ -161,8 +161,10 @@ const Button = styled(TabButton)`
     background: ${({ theme }) => theme.colors.white};
     padding-right: 40px;
   }
+`;
 
-
+const TriggerContent = styled.div`
+  position: relative;
 `;
 export {
   Image,
@@ -177,4 +179,5 @@ export {
   Main,
   RemoveButton,
   Button,
+  TriggerContent,
 };
