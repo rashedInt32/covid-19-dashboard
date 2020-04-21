@@ -22,6 +22,8 @@ const TabButton = styled.button`
 
   @media (max-width: 576px) {
     font-size: 11px;
+    margin-right: 3px;
+    margin-bottom: 5px;
   }
 `;
 

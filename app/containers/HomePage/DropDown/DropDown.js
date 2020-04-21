@@ -115,6 +115,9 @@ const Main = styled.div`
   @media (min-width: 576px) {
     position: relative;
   }
+  @media (max-width:576px) {
+    width: 100%;
+  }
 `;
 
 const RemoveButton = styled.button`
@@ -156,6 +159,10 @@ const Button = styled(TabButton)`
     border: 2px solid ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.primary};
     background: ${({ theme }) => theme.colors.white};
+  }
+
+  @media (max-width: 576px) {
+    width: 90%;
   }
 `;
 export {

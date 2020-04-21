@@ -34,7 +34,7 @@ const Text = styled.h1`
     colored ? theme.colors.primary : theme.colors.secondary};
 
   @media (max-width: 576px) {
-    font-size: 14px;
+    font-size: 15px;
     margin-right: 5px;
   }
 `;
