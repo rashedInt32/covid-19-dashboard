@@ -20,6 +20,11 @@ const TabButton = styled.button`
   background: ${({ theme, active }) =>
     active ? theme.colors.primary : 'transparent'};
 
+  &:disabled {
+    opacity: 0.4;
+    cursor: no-drop;
+  }
+
   @media (max-width: 576px) {
     margin-left: 3px;
     margin-bottom: 5px;

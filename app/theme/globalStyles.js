@@ -150,6 +150,13 @@ body {
 body.fontLoaded {
   font-family: 'Montserrat', 'sans-serif', Helvetica, Arial, sans-serif;
 }
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 #app {
   min-height: 100%;
   min-width: 100%;

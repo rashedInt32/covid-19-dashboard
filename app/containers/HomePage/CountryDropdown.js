@@ -1,5 +1,5 @@
-import React, { useState, useRef, useContext } from 'react';
-import { array, object, func } from 'prop-types';
+import React, { useState, useRef } from 'react';
+import { array, object, func, bool } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 
@@ -78,7 +78,7 @@ const RenderCountries = ({ countries, onClick, selectedCountry, showFlag }) => {
   );
 };
 
-const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
+const CountryDropdown = ({ countries, intl, onClick, onRemove, disabled }) => {
   const [country, setCountry] = useState('');
   const [active, setActive] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
@@ -114,6 +114,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
           onClick={showDropdown}
           active={btnActive}
           className={country !== '' ? 'active' : ''}
+          disabled={disabled}
         >
           {country !== ''
             ? country
@@ -153,6 +154,7 @@ CountryDropdown.propTypes = {
   intl: object,
   onClick: func,
   onRemove: func,
+  disabled: bool,
 };
 
 export default injectIntl(CountryDropdown);

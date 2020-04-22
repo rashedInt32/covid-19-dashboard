@@ -45,6 +45,7 @@ function HomePage({ intl }) {
 
   const [data, setData] = useState({});
   const [renderData, setRenderData] = useState({});
+  const [loading, setLoading] = useState(true);
   // Cases by country
   const [countries, setCountries] = useState({});
   // Timeline, last 30days
@@ -67,7 +68,6 @@ function HomePage({ intl }) {
     setData({
       latest: latest.data,
       previous: previous.data,
-      loading: false,
     });
 
     setRenderData(renderableData(latest.data, previous.data, false));
@@ -82,6 +82,7 @@ function HomePage({ intl }) {
       await getHistorical();
       await getCasesByCountries();
     }
+    setLoading(false);
   };
 
   const getCasesByCountries = async () => {
@@ -176,6 +177,7 @@ function HomePage({ intl }) {
                 key={t}
                 onClick={() => handleTabChange(t)}
                 active={activeTab.has(t)}
+                disabled={loading}
               >
                 {t}
               </TabButton>
@@ -184,6 +186,7 @@ function HomePage({ intl }) {
               countries={countries.latest}
               onClick={onSelectCountry}
               onRemove={onRemoveCountry}
+              disabled={loading}
             />
           </>
         </TabWrapper>
