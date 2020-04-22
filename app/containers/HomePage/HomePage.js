@@ -200,7 +200,7 @@ function HomePage({ intl }) {
           <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
         </Grid>
 
-        <Box title="All countries">
+        <Box>
           <Table countries={countries.latest} />
         </Box>
       </>

@@ -24,7 +24,7 @@ const Title = styled.h4`
 
 const Box = ({ title, children }) => (
   <BoxContainer>
-    <Title>{title}</Title>
+    {title && <Title>{title}</Title>}
     {children}
   </BoxContainer>
 );

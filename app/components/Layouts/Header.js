@@ -10,8 +10,10 @@ import { CountryContext } from '../../containers/Context/CountryContext';
 const Content = styled.div`
   position: relative;
   display: flex;
-  padding-top: 10px;
   align-items: center;
+  @media (min-width: 576px) {
+    padding-top: 10px;
+  }
 `;
 
 const Logo = styled.img`
