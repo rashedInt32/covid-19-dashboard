@@ -126,7 +126,7 @@ function HomePage({ intl }) {
 
   const onRemoveCountry = () => {
     const { latest, previous } = data;
-    setCountry('');
+    setCountry({});
     setActiveTab(new Set([tabs[0]]));
     setRenderData(renderableData(latest, previous, false));
     setRenderHistorical(historical.overall);
