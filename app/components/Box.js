@@ -11,6 +11,9 @@ const BoxContainer = styled.div`
   border-radius: 10px;
   box-shadow: ${({ theme }) => theme.colors.shadow};
   margin: 16px 0 50px;
+  @media (max-width: 576px) {
+    display: none;
+  }
 `;
 
 const Title = styled.h4`
