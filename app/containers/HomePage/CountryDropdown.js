@@ -54,7 +54,7 @@ const RenderCountries = ({ countries, onClick, selectedCountry, showFlag }) => {
             <List
               key={c.country}
               onClick={() => {
-                onClick(c.country);
+                onClick(c);
                 setText('');
               }}
               className={c.country === selectedCountry ? 'active' : ''}
@@ -83,20 +83,16 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
   const [active, setActive] = useState(false);
   const [btnActive, setBtnActive] = useState(false);
 
-  const { updateSelectedCountry } = useContext(CountryContext);
-
   const ref = useRef();
 
   const onClickCountry = c => {
-    setCountry(c);
-    updateSelectedCountry(c);
+    setCountry(c.country);
     setActive(!active);
   };
   const removeCountry = () => {
     setCountry('');
     setBtnActive(false);
     setActive(false);
-    updateSelectedCountry('');
   };
 
   const showDropdown = () => {
@@ -142,8 +138,8 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove }) => {
             selectedCountry={country}
             showFlag={active}
             onClick={c => {
-              onClickCountry(c);
               onClick(c);
+              onClickCountry(c);
             }}
           />
         </DropdownContent>

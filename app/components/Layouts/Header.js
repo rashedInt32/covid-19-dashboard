@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { object, string } from 'prop-types';
 import styled from 'styled-components';
 import { injectIntl } from 'react-intl';
+import _ from 'lodash';
 
 import logo from 'images/logo.svg';
 import messages from './messages';
@@ -49,7 +50,7 @@ const Header = ({ intl, country, active }) => {
       <Text colored>{intl.formatMessage(messages.header)}</Text>
       {active !== 'My Country' ? (
         <Text>
-          {country === '' ? `Global - ${active}` : `${country} - ${active}`}
+          {_.isEmpty(country) ? `Global - ${active}` : `${country.country} - ${active}`}
         </Text>
       ) : (
         <Text>{myCountry.country}</Text>
@@ -60,7 +61,7 @@ const Header = ({ intl, country, active }) => {
 
 Header.propTypes = {
   intl: object,
-  country: string,
+  country: object,
   active: string,
 };
 

@@ -7,8 +7,6 @@ export const CountryContext = createContext();
 
 const CountryContextProvider = ({ children }) => {
   const [myCountry, setMyCountry] = useState({});
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState([]);
 
   useEffect(() => {
     getMyCountry();
@@ -22,17 +20,10 @@ const CountryContextProvider = ({ children }) => {
     setMyCountry(response.data);
   };
 
-  const updateCountries = value => setCountries(value);
-  const updateSelectedCountry = value => setSelectedCountry(value);
-
   return (
     <CountryContext.Provider
       value={{
         myCountry,
-        updateCountries,
-        countries,
-        selectedCountry,
-        updateSelectedCountry,
       }}
     >
       {children}

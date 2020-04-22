@@ -1,10 +1,14 @@
 import _ from 'lodash';
 
-export const getCountry = (countries, myCountry) => {
-  const latest = _.find(countries.latest, c => c.country === myCountry.country);
+export const getCountry = (countries, country) => {
+  const compare = country.countryCode
+    ? country.countryCode
+    : country.countryInfo.iso2;
+
+  const latest = _.find(countries.latest, c => c.countryInfo.iso2 === compare);
   const previous = _.find(
     countries.previous,
-    c => c.country === myCountry.country,
+    c => c.countryInfo.iso2 === compare,
   );
   return { latest, previous };
 };

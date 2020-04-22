@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { object } from 'prop-types';
 import { injectIntl } from 'react-intl';
 import moment from 'moment';
+import _ from 'lodash';
 
 import Layout from 'components/Layouts';
 import Grid from 'components/Grid';
@@ -49,7 +50,7 @@ function HomePage({ intl }) {
   // Timeline, last 30days
   const [historical, setHistorical] = useState({});
   const [renderHistorical, setRenderHistorical] = useState({});
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState({});
   const [shouldFetch, setShouldFetch] = useState(false);
   const [activeTab, setActiveTab] = useState(new Set([tabs[0]]));
 
@@ -79,6 +80,7 @@ function HomePage({ intl }) {
 
     if (latest.data && previous.data) {
       await getHistorical();
+      await getCasesByCountries();
     }
   };
 
@@ -101,9 +103,7 @@ function HomePage({ intl }) {
       overall: countriesHistory.data,
       countries: history.data,
     });
-    if (history.data) {
-      await getCasesByCountries();
-    }
+
     setRenderHistorical(countriesHistory.data);
   };
 
@@ -117,11 +117,11 @@ function HomePage({ intl }) {
   const onSelectCountry = c => {
     setCountry(c);
     setActiveTab(new Set([tabs[0]]));
-    const { latest, previous } = getCountry(countries, { country: c });
+    const { latest, previous } = getCountry(countries, c);
 
     setRenderData(renderableData(latest, previous, false));
     setData({ ...data, today: false, myCountry: false });
-    setRenderHistorical(renderableHistory(historical.countries, c));
+    setRenderHistorical(renderableHistory(historical.countries, c.country));
   };
 
   const onRemoveCountry = () => {
@@ -132,12 +132,12 @@ function HomePage({ intl }) {
     setRenderHistorical(historical.overall);
   };
 
-  const myCountryCases = getCountry(countries, myCountry);
 
   const handleTabChange = tab => {
     setActiveTab(new Set([tab]));
-    const { latest, previous } =
-      country === '' ? data : getCountry(countries, { country });
+    const { latest, previous } = _.isEmpty(country)
+      ? data
+      : getCountry(countries, country, false);
 
     switch (tab) {
       case intl.formatMessage(messages.today):
@@ -149,6 +149,8 @@ function HomePage({ intl }) {
         setData({ ...data, today: false, myCountry: false });
         break;
       case intl.formatMessage(messages.myCountry):
+        // eslint-disable-next-line no-case-declarations
+        const myCountryCases = getCountry(countries, myCountry);
         setRenderData(
           renderableData(myCountryCases.latest, myCountryCases.previous, false),
         );

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { element, string } from 'prop-types';
+import { element, string, object } from 'prop-types';
 
 import Header from './Header';
 
@@ -26,7 +26,7 @@ const Layout = ({ children, country, active }) => (
 
 Layout.propTypes = {
   children: element,
-  country: string,
+  country: object,
   active: string,
 };
 

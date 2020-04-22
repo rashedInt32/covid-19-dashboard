@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   width: 100%;
   min-height: 110px;
   @media (min-width: 576px) {
-    min-height: 125px;
+    min-height: 128px;
     background: ${({ theme }) => theme.colors.white};
   }
 `;
