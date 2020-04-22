@@ -58,7 +58,7 @@ function HomePage({ intl }) {
 
   useEffect(() => {
     getWorldWideCases();
-    return () => clearInterval(interval);
+    //return () => clearInterval(interval);
   }, [shouldFetch]);
 
   const getWorldWideCases = async () => {
@@ -73,11 +73,11 @@ function HomePage({ intl }) {
 
     setRenderData(renderableData(latest.data, previous.data, false));
 
-    if (latest.data) {
-      const lastUpdated = moment(latest.data.updated).fromNow('mm');
-      const minutesAgo = lastUpdated.split(' ')[0];
-      refetch(minutesAgo);
-    }
+    // if (latest.data) {
+    //   const lastUpdated = moment(latest.data.updated).fromNow('mm');
+    //   const minutesAgo = lastUpdated.split(' ')[0];
+    //   refetch(minutesAgo);
+    // }
 
     if (latest.data && previous.data) {
       await getHistorical();
@@ -112,12 +112,12 @@ function HomePage({ intl }) {
     }
   };
 
-  const refetch = time => {
-    const remainingSecond = refecthTime - miliseconds(time);
-    interval = setInterval(() => {
-      setShouldFetch(!shouldFetch);
-    }, remainingSecond);
-  };
+  // const refetch = time => {
+  //   const remainingSecond = refecthTime - miliseconds(time);
+  //   interval = setInterval(() => {
+  //     setShouldFetch(!shouldFetch);
+  //   }, remainingSecond);
+  // };
 
   const onSelectCountry = c => {
     setCountry(c);
