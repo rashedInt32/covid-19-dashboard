@@ -16,6 +16,12 @@ const Main = styled.div`
   position: relative;
   width: ${({ size }) => `${size}px`};
   height: ${({ size }) => `${size}px`};
+  &.center {
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   div {
     box-sizing: border-box;
     display: block;
@@ -26,8 +32,8 @@ const Main = styled.div`
     border-style: solid;
     border-radius: 50%;
     animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: ${({ color }) => color || '#000'} transparent transparent
-      transparent;
+    border-color: ${({ color, theme }) => color || theme.colors.primary}
+      transparent transparent transparent;
 
     @media (max-width: 576px) {
       border-color: ${({ card, color }) => (card ? '#fff' : color)} transparent
@@ -46,8 +52,8 @@ const Main = styled.div`
 `;
 
 
-const Loader = ({ color, size, borderWidth, card }) => (
-  <Main color={color} card={card} size={size} borderWidth={borderWidth}>
+const Loader = ({ color, size, borderWidth, card, className }) => (
+  <Main color={color} className={className} card={card} size={size} borderWidth={borderWidth}>
     <div />
     <div />
     <div />
@@ -60,6 +66,7 @@ Loader.propTypes = {
   size: number,
   borderWidth: number,
   card: bool,
+  className: string,
 };
 
 export default Loader;

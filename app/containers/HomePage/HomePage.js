@@ -7,6 +7,7 @@ import _ from 'lodash';
 import Layout from 'components/Layouts';
 import Grid from 'components/Grid';
 import TabButton from 'components/TabButton';
+import Loader from 'components/Loader';
 import Box from 'components/Box';
 import Table from 'components/Table/Table';
 import { miliseconds } from 'utils/miliseconds';
@@ -209,7 +210,10 @@ function HomePage({ intl }) {
         </Grid>
 
         <Box>
-          <Table countries={countries.latest} />
+          {countries && countries.latest ?
+            <Table countries={countries.latest} />
+            : <Loader size={40} borderWidth={6} className="center" />
+          }
         </Box>
       </>
     </Layout>
