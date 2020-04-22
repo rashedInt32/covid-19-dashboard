@@ -8,6 +8,10 @@ const Grid = styled.div`
     width: calc(100% + 16px);
     margin: -8px;
   }
+  &.main {
+    maring: 0;
+    width: 100%;
+  }
   &.lg-3 {
     padding: 8px;
     width: 50%%;

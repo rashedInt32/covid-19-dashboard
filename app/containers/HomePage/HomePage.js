@@ -7,6 +7,7 @@ import Layout from 'components/Layouts';
 import Grid from 'components/Grid';
 import TabButton from 'components/TabButton';
 import Box from 'components/Box';
+import Table from 'components/Table/Table';
 import { miliseconds } from 'utils/miliseconds';
 import DrawBarChart from 'components/Chart/BarChart';
 import DrawAreaChart from 'components/Chart/AreaChart';
@@ -192,9 +193,16 @@ function HomePage({ intl }) {
         />
         <Grid className="container">
           <DrawBarChart title="Cases" data={renderHistorical.cases} />
-          <DrawAreaChart title="Recovered" data={renderHistorical.recovered} />
+          <DrawAreaChart
+            title="Recovered"
+            data={renderHistorical.recovered}
+          />
           <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
         </Grid>
+
+        <Box title="All countries">
+          <Table countries={countries.latest} />
+        </Box>
       </>
     </Layout>
   );
