@@ -80,7 +80,6 @@ function HomePage({ intl }) {
 
     if (latest.data && previous.data) {
       await getHistorical();
-      await getCasesByCountries();
     }
     setLoading(false);
   };
@@ -106,6 +105,10 @@ function HomePage({ intl }) {
     });
 
     setRenderHistorical(countriesHistory.data);
+
+    if (countriesHistory.data && history.data) {
+      await getCasesByCountries();
+    }
   };
 
   const refetch = time => {
