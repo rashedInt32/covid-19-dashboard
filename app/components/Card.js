@@ -93,7 +93,7 @@ const Card = ({ title, value, percent, color }) => {
   const formatedNumber = value ? (
     new Intl.NumberFormat('en-IN').format(value)
   ) : (
-    <Loader color={color} size={25} borderWidth={4} />
+    <Loader card color={color} size={25} borderWidth={4} />
   );
 
   const isPositive = percent > 0;

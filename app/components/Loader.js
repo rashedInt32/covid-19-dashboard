@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { string, number } from 'prop-types';
+import { string, number, bool } from 'prop-types';
 
 const rotate = keyframes`
   0% {
@@ -22,12 +22,17 @@ const Main = styled.div`
     position: absolute;
     width: ${({ size }) => `${size}px`};
     height: ${({ size }) => `${size}px`};
-    border: ${({ borderWidth }) => `${borderWidth}px` || `8px`} solid
-      ${({ color }) => color || '#000'};
+    border-width: ${({ borderWidth }) => `${borderWidth}px` || `8px`};
+    border-style: solid;
     border-radius: 50%;
     animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: ${({ color }) => color || '#000'} transparent transparent
       transparent;
+
+    @media (max-width: 576px) {
+      border-color: ${({ card, color }) => (card ? '#fff' : color)} transparent
+        transparent transparent;
+    }
     &:nth-child(1) {
       animation-delay: -0.45s;
     }
@@ -41,8 +46,8 @@ const Main = styled.div`
 `;
 
 
-const Loader = ({ color, size, borderWidth }) => (
-  <Main color={color} size={size} borderWidth={borderWidth}>
+const Loader = ({ color, size, borderWidth, card }) => (
+  <Main color={color} card={card} size={size} borderWidth={borderWidth}>
     <div />
     <div />
     <div />
@@ -54,6 +59,7 @@ Loader.propTypes = {
   color: string,
   size: number,
   borderWidth: number,
+  card: bool,
 };
 
 export default Loader;
