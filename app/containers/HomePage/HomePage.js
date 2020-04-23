@@ -21,13 +21,13 @@ import {
   getAllHistorical,
   getAllHistoricalByCountry,
 } from './HomeApi';
-import { renderableData } from './renderableData';
-import { renderableHistory } from './renderableHistory';
+import { renderableData } from './homeUtils/renderableData';
+import { renderableHistory } from './homeUtils/renderableHistory';
 import { getCountry } from './homeUtils/getCountry';
 
 import TabWrapper from './Tab/TabWrapper';
 import RenderCard from './Card/RenderCard';
-import CountryDropdown from './CountryDropdown';
+import CountryDropdown from './DropDown/CountryDropdown';
 
 import messages from './messages';
 import { CountryContext } from '../Context/CountryContext';
