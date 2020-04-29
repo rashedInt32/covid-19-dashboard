@@ -7,7 +7,6 @@ const CardWrapper = styled.div`
 
   @media (min-width: 576px) {
     padding: 30px 0 16px;
-
   }
 `;
 

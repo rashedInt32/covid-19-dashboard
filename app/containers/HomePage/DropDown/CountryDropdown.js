@@ -4,7 +4,8 @@ import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
-import messages from './messages';
+import messages from '../messages';
+
 import {
   Image,
   Name,
@@ -19,8 +20,7 @@ import {
   RemoveButton,
   Button,
   TriggerContent,
-} from './DropDown/DropDown';
-import { CountryContext } from '../Context/CountryContext';
+} from './DropDown';
 
 // eslint-disable-next-line react/prop-types
 const RenderCountries = ({ countries, onClick, selectedCountry, showFlag }) => {
@@ -60,9 +60,7 @@ const RenderCountries = ({ countries, onClick, selectedCountry, showFlag }) => {
               className={c.country === selectedCountry ? 'active' : ''}
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                {showFlag && (
-                  <Image src={c.countryInfo.flag} atl={c.country} />
-                )}
+                {showFlag && <Image src={c.countryInfo.flag} atl={c.country} />}
                 <Name>{c.country}</Name>
               </div>
               <Cases>{new Intl.NumberFormat('en-IN').format(c.cases)}</Cases>
@@ -103,7 +101,7 @@ const CountryDropdown = ({ countries, intl, onClick, onRemove, disabled }) => {
   };
 
   useOnClickOutside(ref, () => {
-    setActive(false)
+    setActive(false);
     setBtnActive(false);
   });
 

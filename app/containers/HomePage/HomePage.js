@@ -137,7 +137,6 @@ function HomePage({ intl }) {
     setRenderHistorical(historical.overall);
   };
 
-
   const handleTabChange = tab => {
     setActiveTab(new Set([tab]));
     const { latest, previous } = _.isEmpty(country)
@@ -202,19 +201,15 @@ function HomePage({ intl }) {
         />
         <Grid className="container">
           <DrawBarChart title="Cases" data={renderHistorical.cases} />
-          <DrawAreaChart
-            title="Recovered"
-            data={renderHistorical.recovered}
-          />
+          <DrawAreaChart title="Recovered" data={renderHistorical.recovered} />
           <DrawLineChart title="Deaths" data={renderHistorical.deaths} />
         </Grid>
 
-        <Box>
-          {countries && countries.latest ?
+        {countries && countries.latest && (
+          <Box>
             <Table countries={countries.latest} />
-            : <Loader size={40} borderWidth={6} className="center" />
-          }
-        </Box>
+          </Box>
+        )}
       </>
     </Layout>
   );

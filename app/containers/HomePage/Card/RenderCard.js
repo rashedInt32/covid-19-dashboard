@@ -4,7 +4,6 @@ import { ThemeContext } from 'styled-components';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 
-
 import messages from 'containers/HomePage/messages';
 import Card from 'components/Card';
 import Grid from 'components/Grid';
